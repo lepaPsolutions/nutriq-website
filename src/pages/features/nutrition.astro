@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SimpleFeaturePage from "../../components/SimpleFeaturePage.astro";
+import FinalCTA from "../../components/home/FinalCTA.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = lang === "el"
+  ? {
+      eyebrow: "Διατροφική Ανάλυση",
+      title: "Κάθε θρεπτικό, παρακολουθούμενο. Καμία υπόθεση.",
+      sub: "Macros, micros (βιταμίνες A-K και μέταλλα), ανθρωπομετρικά, βιοχημικά τεστ, σύσταση σώματος — όλα σε ένα ενιαίο προφίλ πελάτη. Επιστημονική βάση, κλινική ακρίβεια.",
+      bullets: [
+        { title: "Μακροθρεπτικά", body: "Πρωτεΐνη, υδατάνθρακες, λίπη (κορεσμένα, μονοακόρεστα, πολυακόρεστα, trans), φυτικές ίνες, σάκχαρα, νάτριο, χοληστερόλη." },
+        { title: "Μικροθρεπτικά", body: "Βιταμίνες A, B1-B12, C, D, E, K, φολικό οξύ. Ασβέστιο, σίδηρος, μαγνήσιο, φώσφορος, κάλιο, ψευδάργυρος, χαλκός, μαγγάνιο, σελήνιο." },
+        { title: "Ανθρωπομετρικά", body: "Ύψος, βάρος, λαιμός, στήθος, μέση, ισχίο, χέρι, μηρός, γάμπα. Με αυτόματο υπολογισμό BMI, % λίπους, % νερού." },
+        { title: "Σύσταση σώματος", body: "Γραφήματα τάσης σε βάθος χρόνου. Βλέπεις τη διαφορά μυϊκής μάζας και λίπους — όχι μόνο τη ζυγαριά." },
+        { title: "Βιοχημικά τεστ", body: "Καταχώρηση αποτελεσμάτων αιματολογικών. Tracking σε βάθος χρόνου με δικά σου ιατρικά σχόλια." },
+        { title: "Στόχοι βάρους", body: "Maintenance, mild (−250kcal), normal (−500kcal), extreme (−1000kcal) loss ή gain. Με timeline και προσαρμογές." },
+      ],
+      closingHeading: "Δεδομένα που μετράνε. Όχι δεδομένα για χάρη των δεδομένων.",
+      closingBody: "Όλη η ανάλυση είναι ευθυγραμμισμένη με τις τρέχουσες κατευθυντήριες οδηγίες της Ευρωπαϊκής Εταιρείας Διατροφής. Συνδεδεμένη με τα πλάνα και τα γραφήματα προόδου, ώστε να βλέπεις cause-and-effect σε real time.",
+    }
+  : {
+      eyebrow: "Nutritional Analysis",
+      title: "Every nutrient, tracked. No guesswork.",
+      sub: "Macros, micros (vitamins A-K and minerals), anthropometrics, biochemical tests, body composition — all in a single client profile. Science-based, clinical precision.",
+      bullets: [
+        { title: "Macronutrients", body: "Protein, carbs, fats (saturated, mono, poly, trans), fiber, sugars, sodium, cholesterol." },
+        { title: "Micronutrients", body: "Vitamins A, B1-B12, C, D, E, K, folate. Calcium, iron, magnesium, phosphorus, potassium, zinc, copper, manganese, selenium." },
+        { title: "Anthropometrics", body: "Height, weight, neck, chest, waist, hip, arm, thigh, calf. With automatic BMI, body fat %, water % calculation." },
+        { title: "Body composition", body: "Trend charts over time. See the difference between muscle and fat — not just the scale." },
+        { title: "Biochemical tests", body: "Log lab results. Long-term tracking with your own clinical notes." },
+        { title: "Weight goals", body: "Maintenance, mild (−250kcal), normal (−500kcal), extreme (−1000kcal) loss or gain. With timeline and adjustments." },
+      ],
+      closingHeading: "Data that matters. Not data for data's sake.",
+      closingBody: "Every analysis aligns with current European Society of Nutrition guidelines. Wired to plans and progress charts so you see cause-and-effect in real time.",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "Διατροφική Ανάλυση — Nutriq" : "Nutritional Analysis — Nutriq"}
+  description={content.sub}
+>
+  <SimpleFeaturePage {...content} />
+  <FinalCTA />
+</BaseLayout>

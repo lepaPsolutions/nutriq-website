@@ -1,0 +1,77 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+
+const text = lang === "el"
+  ? {
+      heading: "Χρησιμοποιούμε cookies",
+      body: "Χρησιμοποιούμε αναγκαία και αναλυτικά cookies για να βελτιώσουμε την εμπειρία σου. Διάβασε την",
+      policy: "Πολιτική Cookies",
+      accept: "Αποδοχή όλων",
+      essential: "Μόνο αναγκαία",
+    }
+  : {
+      heading: "We use cookies",
+      body: "We use essential and analytics cookies to improve your experience. Read our",
+      policy: "Cookie Policy",
+      accept: "Accept all",
+      essential: "Essential only",
+    };
+---
+
+<div
+  id="cookie-banner"
+  class="fixed bottom-4 left-4 right-4 md:left-6 md:bottom-6 md:right-auto md:max-w-md z-[60] hidden"
+>
+  <div class="rounded-2xl bg-ink/95 backdrop-blur-xl text-cream-100 p-5 md:p-6 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-cream-50/10">
+    <div class="flex items-start gap-3">
+      <div class="flex-shrink-0 mt-0.5">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-peach-400">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="9" cy="9" r="1" fill="currentColor"/>
+          <circle cx="15" cy="12" r="1" fill="currentColor"/>
+          <circle cx="9" cy="15" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-display text-lg leading-tight tracking-[-0.01em]">{text.heading}</h3>
+        <p class="mt-1.5 text-[13px] text-cream-200/80 leading-relaxed">
+          {text.body}
+          <a href={lang === "el" ? "/cookies" : "/en/cookies"} class="underline hover:text-cream-50">
+            {text.policy}
+          </a>.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button
+            id="cookie-accept"
+            class="inline-flex items-center rounded-full bg-cream-50 px-4 py-2 text-ink text-[13px] font-medium hover:bg-cream-100 transition-colors"
+          >
+            {text.accept}
+          </button>
+          <button
+            id="cookie-essential"
+            class="inline-flex items-center rounded-full border border-cream-50/30 px-4 py-2 text-[13px] font-medium hover:bg-cream-50/10 transition-colors"
+          >
+            {text.essential}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = "nutriq-cookie-consent";
+  const banner = document.getElementById("cookie-banner");
+  if (banner && !localStorage.getItem(KEY)) {
+    setTimeout(() => banner.classList.remove("hidden"), 1200);
+  }
+  document.getElementById("cookie-accept")?.addEventListener("click", () => {
+    localStorage.setItem(KEY, "all");
+    banner?.classList.add("hidden");
+  });
+  document.getElementById("cookie-essential")?.addEventListener("click", () => {
+    localStorage.setItem(KEY, "essential");
+    banner?.classList.add("hidden");
+  });
+</script>

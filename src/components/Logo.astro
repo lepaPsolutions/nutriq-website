@@ -1,0 +1,30 @@
+---
+interface Props {
+  variant?: "full" | "mark";
+  class?: string;
+  href?: string;
+  inverted?: boolean;
+}
+
+const { variant = "full", class: className = "", href = "/", inverted = false } = Astro.props;
+---
+
+<a href={href} class={`inline-flex items-center group ${className}`} aria-label="Nutriq — Your Nutrition Guide">
+  {variant === "full" ? (
+    <img
+      src="/nutriq-logo.svg"
+      alt="Nutriq"
+      width="123"
+      height="36"
+      class={`h-9 w-auto transition-transform duration-300 ease-out group-hover:scale-[1.02] ${inverted ? "brightness-0 invert" : ""}`}
+    />
+  ) : (
+    <img
+      src="/nutriq-mark.svg"
+      alt="Nutriq"
+      width="44"
+      height="44"
+      class={`h-11 w-auto transition-transform duration-300 ease-out group-hover:rotate-[6deg] ${inverted ? "brightness-0 invert" : ""}`}
+    />
+  )}
+</a>

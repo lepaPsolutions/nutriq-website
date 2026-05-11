@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import TrustStrip from "../components/home/TrustStrip.astro";
+import Problem from "../components/home/Problem.astro";
+import FeatureTabs from "../components/FeatureTabs.astro";
+import HowItWorks from "../components/home/HowItWorks.astro";
+import Testimonials from "../components/home/Testimonials.astro";
+import PricingTeaser from "../components/home/PricingTeaser.astro";
+import AboutSection from "../components/home/AboutSection.astro";
+import FAQ from "../components/home/FAQ.astro";
+import FinalCTA from "../components/home/FinalCTA.astro";
+
+const title = "Nutriq — Λογισμικό διατροφής για διαιτολόγους";
+const description =
+  "Η Nutriq είναι το πλήρες εργαλείο διατροφής για διαιτολόγους. AI παραγωγή πλάνων, πύλη πελάτη, πλήρης διατροφική ανάλυση, διαχείριση ομάδας. Δοκίμασε δωρεάν.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <TrustStrip />
+  <Problem />
+  <FeatureTabs />
+  <HowItWorks />
+  <Testimonials />
+  <PricingTeaser />
+  <AboutSection />
+  <FAQ />
+  <FinalCTA />
+</BaseLayout>

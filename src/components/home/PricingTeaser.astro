@@ -1,0 +1,67 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const tiers = lang === "el"
+  ? [
+      { name: "Solo · Starter", price: "19€", desc: "Έως 20 πελάτες, 40 AI credits", popular: false },
+      { name: "Solo · Professional", price: "29€", desc: "Έως 50 πελάτες, 120 credits", popular: true },
+      { name: "Team · Small", price: "119€", desc: "Έως 3 επαγγελματίες, 300 credits", popular: false },
+    ]
+  : [
+      { name: "Solo · Starter", price: "€19", desc: "Up to 20 clients, 40 AI credits", popular: false },
+      { name: "Solo · Professional", price: "€29", desc: "Up to 50 clients, 120 credits", popular: true },
+      { name: "Team · Small", price: "€119", desc: "Up to 3 professionals, 300 credits", popular: false },
+    ];
+---
+
+<section id="pricing" class="section bg-cream-100 scroll-mt-header">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="overline">{t("pricing-teaser.eyebrow")}</p>
+      <h2 class="mt-5 text-display-md text-ink text-balance">
+        {t("pricing-teaser.title")}
+      </h2>
+      <p class="mt-5 text-[18px] leading-[1.55] text-gray-600 text-pretty">
+        {t("pricing-teaser.subtitle")}
+      </p>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-5">
+      {tiers.map((tier) => (
+        <div class={`relative rounded-2xl p-7 md:p-8 transition-all duration-200 ${
+          tier.popular
+            ? "bg-brand-900 text-white shadow-figure ring-1 ring-brand-700"
+            : "bg-white border border-gray-200 shadow-card hover:shadow-card-hover hover:-translate-y-0.5"
+        }`}>
+          {tier.popular && (
+            <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em]">
+              <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><path d="M5 0l1.2 3.5L10 4.5l-3.8 1L5 9 3.8 5.5 0 4.5l3.8-1z"/></svg>
+              {lang === "el" ? "Δημοφιλές" : "Popular"}
+            </span>
+          )}
+          <h3 class={`text-[12px] font-bold tracking-[0.12em] uppercase ${tier.popular ? "text-peach-300" : "text-brand-700"}`}>
+            {tier.name}
+          </h3>
+          <div class="mt-4 flex items-baseline gap-1">
+            <span class={`text-[44px] font-bold leading-none tracking-tighter tabular-nums ${tier.popular ? "text-white" : "text-ink"}`}>{tier.price}</span>
+            <span class={`text-[13px] ${tier.popular ? "text-white/65" : "text-gray-500"}`}>{t("pricing.month")}</span>
+          </div>
+          <p class={`mt-3 text-[14px] leading-relaxed ${tier.popular ? "text-white/80" : "text-gray-600"}`}>
+            {tier.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 flex justify-center">
+      <a href={localizePath("pricing", lang)} class="btn-primary group">
+        {t("pricing-teaser.cta")}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="transition-transform duration-200 group-hover:translate-x-0.5">
+          <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

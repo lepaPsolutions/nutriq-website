@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SimpleFeaturePage from "../../components/SimpleFeaturePage.astro";
+import FinalCTA from "../../components/home/FinalCTA.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = lang === "el"
+  ? {
+      eyebrow: "Βάση Τροφίμων & Συνταγών",
+      title: "Χιλιάδες τρόφιμα. 13 διατροφικά πρότυπα. Όλα μετρημένα.",
+      sub: "Πλήρης ελληνική και διεθνής βάση τροφίμων με ακριβή θρεπτικά. Συνταγές με βήμα-βήμα οδηγίες. Δικές σου εγγραφές, ιδιωτικά για το κέντρο σου.",
+      bullets: [
+        { title: "13 διατροφικά πρότυπα", body: "Mediterranean, Keto, Vegan, Vegetarian, Pescetarian, Dukan, Atkins, Low-Carb, Low-Fat, Gluten-Free, Planetary, Very-Low-Carb, Very-Low-Fat." },
+        { title: "Ακρίβεια θρεπτικών", body: "Macros + 17 μικροθρεπτικά ανά τρόφιμο. Όλα τα δεδομένα ευθυγραμμισμένα με EFSA & USDA." },
+        { title: "Μονάδες μέτρησης", body: "Γραμμάρια, κούπες, oz, lb, κουταλιές, λίτρα — αυτόματη μετατροπή με density data." },
+        { title: "Ιδιωτικές συνταγές", body: "Δημιούργησε δικές σου συνταγές με υλικά. Αυτόματος υπολογισμός θρεπτικών. Ορατές μόνο στο κέντρο σου." },
+        { title: "Ομάδες τροφίμων", body: "Πρωτεΐνη, γαλακτοκομικά, δημητριακά, φρούτα, λαχανικά, ξηροί καρποί — εύκολη εξαίρεση ολόκληρων ομάδων ανά πελάτη." },
+        { title: "Full-text search", body: "Αναζήτηση με ελληνικούς χαρακτήρες, autocomplete, filtering, sorting. Βρες ό,τι χρειάζεσαι σε δευτερόλεπτα." },
+      ],
+      closingHeading: "Η μόνη βάση τροφίμων που σχεδιάστηκε για ελληνική κουζίνα.",
+      closingBody: "Από φέτα και ελιές Καλαμών μέχρι τραχανά και μυζήθρα — έχουμε καταχωρήσει χιλιάδες παραδοσιακά ελληνικά τρόφιμα με ακριβή θρεπτικά. Συνδυασμένα με διεθνείς βάσεις για ολοκληρωμένη κάλυψη.",
+    }
+  : {
+      eyebrow: "Food & Recipe Database",
+      title: "Thousands of foods. 13 dietary patterns. All measured.",
+      sub: "Complete Greek and international food database with precise nutrients. Recipes with step-by-step instructions. Your own entries, private to your center.",
+      bullets: [
+        { title: "13 dietary patterns", body: "Mediterranean, Keto, Vegan, Vegetarian, Pescetarian, Dukan, Atkins, Low-Carb, Low-Fat, Gluten-Free, Planetary, Very-Low-Carb, Very-Low-Fat." },
+        { title: "Nutrient precision", body: "Macros + 17 micronutrients per food. All data aligned with EFSA & USDA references." },
+        { title: "Measurement units", body: "Grams, cups, oz, lb, tablespoons, liters — automatic conversion with density data." },
+        { title: "Private recipes", body: "Create your own recipes with ingredients. Automatic nutrient calculation. Visible only to your center." },
+        { title: "Food groups", body: "Protein, dairy, grains, fruits, vegetables, nuts — easy whole-group exclusion per client." },
+        { title: "Full-text search", body: "Greek character search, autocomplete, filtering, sorting. Find what you need in seconds." },
+      ],
+      closingHeading: "The only food database designed for Greek cuisine.",
+      closingBody: "From feta and Kalamata olives to trahanas and myzithra — we've cataloged thousands of traditional Greek foods with precise nutritional data. Combined with international databases for complete coverage.",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "Βάση Τροφίμων — Nutriq" : "Food Database — Nutriq"}
+  description={content.sub}
+>
+  <SimpleFeaturePage {...content} />
+  <FinalCTA />
+</BaseLayout>

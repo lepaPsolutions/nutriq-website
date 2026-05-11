@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalPage from "../components/LegalPage.astro";
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = lang === "el"
+  ? {
+      eyebrow: "Νομικά",
+      title: "Πολιτική Cookies",
+      lastUpdated: "Τελευταία ενημέρωση: Μάιος 2026",
+      intro: "Χρησιμοποιούμε cookies και παρόμοιες τεχνολογίες για να σας προσφέρουμε καλύτερη εμπειρία. Δεν τα χρησιμοποιούμε για behavioral advertising.",
+      sections: [
+        { heading: "Τι είναι τα cookies", body: "Cookies είναι μικρά αρχεία κειμένου που αποθηκεύονται στον browser σας από τις ιστοσελίδες που επισκέπτεστε. Βοηθούν να θυμόμαστε προτιμήσεις και να βελτιώνουμε την εμπειρία." },
+        { heading: "Cookies που χρησιμοποιούμε", body: "Αναγκαία cookies: για authentication (JWT token), session preferences, language. Δεν μπορείτε να τα αρνηθείτε γιατί είναι απαραίτητα για τη λειτουργία.\n\nAnalytics cookies: για να καταλάβουμε πώς χρησιμοποιείται το site (Plausible — privacy-friendly, χωρίς personal data ή IP tracking). Μπορείτε να τα αρνηθείτε από το banner." },
+        { heading: "Πώς ελέγχετε τα cookies", body: "Από το cookie banner στην πρώτη επίσκεψή σας. Επίσης μέσω των ρυθμίσεων του browser σας μπορείτε να διαγράψετε existing cookies ή να αποτρέψετε νέα. Σημείωση: αν αρνηθείτε τα αναγκαία, η πλατφόρμα δε θα λειτουργήσει σωστά." },
+        { heading: "Third-party cookies", body: "Δεν χρησιμοποιούμε third-party advertising cookies. Δε μοιραζόμαστε δεδομένα με ad networks ή κοινωνικά δίκτυα για profiling." },
+        { heading: "Αλλαγές στην πολιτική", body: "Αν αλλάξουμε αυτή την πολιτική, θα ενημερώσουμε την ημερομηνία στην κορυφή και θα στείλουμε email αν οι αλλαγές είναι ουσιαστικές." },
+      ],
+    }
+  : {
+      eyebrow: "Legal",
+      title: "Cookie Policy",
+      lastUpdated: "Last updated: May 2026",
+      intro: "We use cookies and similar technologies to offer you a better experience. We do NOT use them for behavioral advertising.",
+      sections: [
+        { heading: "What are cookies", body: "Cookies are small text files stored in your browser by sites you visit. They help remember preferences and improve the experience." },
+        { heading: "Cookies we use", body: "Essential cookies: for authentication (JWT token), session preferences, language. You cannot decline these because they're required for functionality.\n\nAnalytics cookies: to understand how the site is used (Plausible — privacy-friendly, no personal data or IP tracking). You can decline these from the banner." },
+        { heading: "How to control cookies", body: "Via the cookie banner on your first visit. Also through your browser settings you can delete existing cookies or prevent new ones. Note: if you decline essential ones, the platform won't work properly." },
+        { heading: "Third-party cookies", body: "We don't use third-party advertising cookies. We don't share data with ad networks or social platforms for profiling." },
+        { heading: "Changes to this policy", body: "If we change this policy, we'll update the date at the top and send an email if changes are substantive." },
+      ],
+    };
+---
+
+<BaseLayout title={lang === "el" ? "Πολιτική Cookies — Nutriq" : "Cookie Policy — Nutriq"} description={content.intro}>
+  <LegalPage {...content} />
+</BaseLayout>

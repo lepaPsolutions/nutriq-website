@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LegalPage from "../../components/LegalPage.astro";
+
+const content = {
+  eyebrow: "Legal",
+  title: "Cookie Policy",
+  lastUpdated: "Last updated: May 2026",
+  intro: "We use cookies and similar technologies to offer you a better experience. We do NOT use them for behavioral advertising.",
+  sections: [
+    { heading: "What are cookies", body: "Cookies are small text files stored in your browser by sites you visit. They help remember preferences and improve the experience." },
+    { heading: "Cookies we use", body: "Essential cookies: for authentication (JWT token), session preferences, language. You cannot decline these because they're required for functionality.\n\nAnalytics cookies: to understand how the site is used (Plausible — privacy-friendly, no personal data or IP tracking). You can decline these from the banner." },
+    { heading: "How to control cookies", body: "Via the cookie banner on your first visit. Also through your browser settings you can delete existing cookies or prevent new ones. Note: if you decline essential ones, the platform won't work properly." },
+    { heading: "Third-party cookies", body: "We don't use third-party advertising cookies. We don't share data with ad networks or social platforms for profiling." },
+    { heading: "Changes to this policy", body: "If we change this policy, we'll update the date at the top and send an email if changes are substantive." },
+  ],
+};
+---
+
+<BaseLayout title="Cookie Policy — Nutriq" description={content.intro}>
+  <LegalPage {...content} />
+</BaseLayout>

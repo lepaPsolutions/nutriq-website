@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SimpleFeaturePage from "../../../components/SimpleFeaturePage.astro";
+import FinalCTA from "../../../components/home/FinalCTA.astro";
+import { getLangFromUrl } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = {
+  eyebrow: "Nutritional Analysis",
+  title: "Every nutrient, tracked. No guesswork.",
+  sub: "Macros, micros (vitamins A-K and minerals), anthropometrics, biochemical tests, body composition — all in a single client profile. Science-based, clinical precision.",
+  bullets: [
+    { title: "Macronutrients", body: "Protein, carbs, fats (saturated, mono, poly, trans), fiber, sugars, sodium, cholesterol." },
+    { title: "Micronutrients", body: "Vitamins A, B1-B12, C, D, E, K, folate. Calcium, iron, magnesium, phosphorus, potassium, zinc, copper, manganese, selenium." },
+    { title: "Anthropometrics", body: "Height, weight, neck, chest, waist, hip, arm, thigh, calf. With automatic BMI, body fat %, water % calculation." },
+    { title: "Body composition", body: "Trend charts over time. See the difference between muscle and fat — not just the scale." },
+    { title: "Biochemical tests", body: "Log lab results. Long-term tracking with your own clinical notes." },
+    { title: "Weight goals", body: "Maintenance, mild (−250kcal), normal (−500kcal), extreme (−1000kcal) loss or gain. With timeline and adjustments." },
+  ],
+  closingHeading: "Data that matters. Not data for data's sake.",
+  closingBody: "Every analysis aligns with current European Society of Nutrition guidelines. Wired to plans and progress charts so you see cause-and-effect in real time.",
+};
+---
+
+<BaseLayout title="Nutritional Analysis — Nutriq" description={content.sub}>
+  <SimpleFeaturePage {...content} />
+  <FinalCTA />
+</BaseLayout>

@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getLangFromUrl, localizePath } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const copy = lang === "el"
+  ? {
+      eyebrow: "Blog",
+      title: "Άρθρα για διαιτολόγους που θέλουν να γίνουν καλύτεροι.",
+      sub: "Πρακτικές συμβουλές για τη διατροφική πρακτική, νέα έρευνα, και επαγγελματική ανάπτυξη.",
+      readMore: "Διάβασε",
+      featured: "Επιλεγμένο",
+    }
+  : {
+      eyebrow: "Blog",
+      title: "Articles for dietitians who want to get better.",
+      sub: "Practical tips for nutrition practice, new research, and professional growth.",
+      readMore: "Read",
+      featured: "Featured",
+    };
+
+const posts = lang === "el"
+  ? [
+      {
+        slug: "manage-50-clients-without-spreadsheets",
+        title: "Πώς να διαχειριστείς 50+ διατροφικούς πελάτες χωρίς spreadsheets",
+        excerpt: "Οι περισσότεροι διαιτολόγοι ξεκινούν με Excel. Λειτουργεί για 10 πελάτες. Σπάει στους 30. Είναι καταστροφή στους 50. Δες πώς να φτιάξεις workflow που κλιμακώνει.",
+        date: "2026-04-15",
+        readingTime: "8 λεπτά",
+        category: "Practice management",
+        featured: true,
+      },
+      {
+        slug: "ai-meal-planning-2026",
+        title: "AI στη διατροφή το 2026: τι αλλάζει, τι μένει ίδιο",
+        excerpt: "Δεν είναι όλα τα AI tools ίδια. Δες πώς να αξιολογήσεις αν ένα εργαλείο πραγματικά σε βοηθάει, ή απλά παράγει impressive output.",
+        date: "2026-04-08",
+        readingTime: "6 λεπτά",
+        category: "AI & Tech",
+        featured: false,
+      },
+      {
+        slug: "gdpr-compliance-dietitians",
+        title: "GDPR για διαιτολογικές πρακτικές: πλήρης οδηγός 2026",
+        excerpt: "Τι σημαίνει GDPR για τη δουλειά σου, πώς να συμμορφωθείς, και ποιες ευθύνες έχεις απέναντι στους πελάτες σου.",
+        date: "2026-03-22",
+        readingTime: "12 λεπτά",
+        category: "Compliance",
+        featured: false,
+      },
+      {
+        slug: "client-retention-nutrition",
+        title: "Γιατί φεύγουν οι πελάτες σου (και πώς να τους κρατήσεις)",
+        excerpt: "Το 40% των διαιτολόγων χάνει πελάτες λόγω αργής επικοινωνίας. Στατιστικά και τακτικές που δουλεύουν.",
+        date: "2026-03-10",
+        readingTime: "7 λεπτά",
+        category: "Practice management",
+        featured: false,
+      },
+      {
+        slug: "macro-tracking-clinical",
+        title: "Macro tracking για κλινικούς διαιτολόγους: ολοκληρωμένος οδηγός",
+        excerpt: "Από πότε να ζητάς πελάτες να καταγράφουν, πώς να ερμηνεύεις τα δεδομένα, και πότε να χαλαρώνεις τους κανόνες.",
+        date: "2026-02-28",
+        readingTime: "10 λεπτά",
+        category: "Nutrition science",
+        featured: false,
+      },
+    ]
+  : [
+      {
+        slug: "manage-50-clients-without-spreadsheets",
+        title: "How to manage 50+ nutrition clients without spreadsheets",
+        excerpt: "Most dietitians start with Excel. It works for 10 clients. Breaks at 30. Catastrophic at 50. Here's how to build a workflow that scales.",
+        date: "2026-04-15",
+        readingTime: "8 min",
+        category: "Practice management",
+        featured: true,
+      },
+      {
+        slug: "ai-meal-planning-2026",
+        title: "AI in nutrition in 2026: what changes, what stays the same",
+        excerpt: "Not all AI tools are equal. Here's how to evaluate whether a tool actually helps you, or just produces impressive output.",
+        date: "2026-04-08",
+        readingTime: "6 min",
+        category: "AI & Tech",
+        featured: false,
+      },
+      {
+        slug: "gdpr-compliance-dietitians",
+        title: "GDPR for nutrition practices: complete 2026 guide",
+        excerpt: "What GDPR means for your work, how to comply, and what your responsibilities are toward your clients.",
+        date: "2026-03-22",
+        readingTime: "12 min",
+        category: "Compliance",
+        featured: false,
+      },
+      {
+        slug: "client-retention-nutrition",
+        title: "Why your clients leave (and how to keep them)",
+        excerpt: "40% of dietitians lose clients to slow communication. Statistics and tactics that actually work.",
+        date: "2026-03-10",
+        readingTime: "7 min",
+        category: "Practice management",
+        featured: false,
+      },
+      {
+        slug: "macro-tracking-clinical",
+        title: "Macro tracking for clinical dietitians: complete guide",
+        excerpt: "When to ask clients to track, how to interpret data, and when to relax the rules.",
+        date: "2026-02-28",
+        readingTime: "10 min",
+        category: "Nutrition science",
+        featured: false,
+      },
+    ];
+
+const featured = posts.find((p) => p.featured)!;
+const rest = posts.filter((p) => !p.featured);
+---
+
+<BaseLayout
+  title={lang === "el" ? "Blog — Nutriq" : "Blog — Nutriq"}
+  description={copy.sub}
+>
+  <section class="relative pt-20 md:pt-24 pb-12 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-aurora opacity-80" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30" aria-hidden="true"></div>
+    <div class="container-x text-center">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 px-4 py-1.5 shadow-xs">
+        <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+        <span class="text-[12px] font-semibold tracking-[0.04em] uppercase text-gray-700">{copy.eyebrow}</span>
+      </div>
+      <h1 class="mt-7 text-display-lg text-ink text-balance max-w-3xl mx-auto">{copy.title}</h1>
+      <p class="mt-6 max-w-xl mx-auto text-[18px] leading-[1.55] text-gray-600 text-pretty">{copy.sub}</p>
+    </div>
+  </section>
+
+  <section class="pb-24">
+    <div class="container-x">
+      <!-- Featured post -->
+      <a href={localizePath(`blog/${featured.slug}`, lang)} class="group block rounded-3xl bg-white border border-gray-200 overflow-hidden shadow-card hover:shadow-card-hover transition-all">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+          <div class="aspect-[4/3] md:aspect-auto relative bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 flex items-center justify-center overflow-hidden">
+            <img src="/nutriq-mark.svg" alt="" class="h-48 w-48 brightness-0 invert opacity-20 group-hover:scale-110 transition-transform duration-500" />
+            <span class="absolute top-5 left-5 inline-flex items-center gap-1.5 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-bold uppercase tracking-wider">
+              <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor"><path d="M5 0l1.2 3.5L10 4.5l-3.8 1L5 9 3.8 5.5 0 4.5l3.8-1z"/></svg>
+              {copy.featured}
+            </span>
+          </div>
+          <div class="p-8 md:p-12 flex flex-col justify-center">
+            <div class="flex items-center gap-3 text-[12px] text-gray-500">
+              <span class="font-semibold text-brand-700">{featured.category}</span>
+              <span>·</span>
+              <span>{featured.readingTime}</span>
+            </div>
+            <h2 class="mt-4 text-[26px] md:text-[32px] font-bold tracking-[-0.025em] text-ink text-balance leading-tight">
+              {featured.title}
+            </h2>
+            <p class="mt-4 text-[15px] leading-relaxed text-gray-600 text-pretty">{featured.excerpt}</p>
+            <span class="mt-6 inline-flex items-center gap-1.5 text-[14px] font-semibold text-brand-700 group-hover:gap-2.5 transition-all">
+              {copy.readMore}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Rest of posts -->
+      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {rest.map((post) => (
+          <a href={localizePath(`blog/${post.slug}`, lang)} class="group block rounded-2xl bg-white border border-gray-200 p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all">
+            <div class="flex items-center gap-3 text-[12px] text-gray-500">
+              <span class="font-semibold text-brand-700">{post.category}</span>
+              <span>·</span>
+              <span>{post.readingTime}</span>
+            </div>
+            <h3 class="mt-3 text-[20px] font-bold tracking-[-0.02em] text-ink text-balance leading-tight">
+              {post.title}
+            </h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-gray-600 text-pretty">{post.excerpt}</p>
+            <span class="mt-5 inline-flex items-center gap-1 text-[13px] font-semibold text-brand-700 group-hover:gap-2 transition-all">
+              {copy.readMore}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2.5l3.5 3.5L4 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

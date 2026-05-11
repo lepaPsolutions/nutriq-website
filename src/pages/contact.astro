@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const copy = lang === "el"
+  ? {
+      eyebrow: "Επικοινωνία",
+      title: "Ας μιλήσουμε.",
+      sub: "Πες μας λίγα για την πρακτική σου και τι αναζητάς. Θα επικοινωνήσουμε εντός 1 εργάσιμης μέρας.",
+      nameL: "Ονοματεπώνυμο",
+      emailL: "Email",
+      practiceL: "Μέγεθος πρακτικής",
+      practiceOpts: ["Solo (1 διαιτολόγος)", "Μικρή ομάδα (2-5)", "Μεσαία κλινική (6-15)", "Μεγάλο κέντρο (15+)", "Άλλο"],
+      topicL: "Θέμα",
+      topicOpts: ["Demo / Παρουσίαση", "Pricing & συνδρομές", "Μεταφορά πελατών από άλλο εργαλείο", "Enterprise / SLA", "Τεχνική ερώτηση", "Συνεργασία"],
+      msgL: "Το μήνυμά σου",
+      msgPh: "Λίγα λόγια για το τι αναζητάς...",
+      consent: "Συμφωνώ με την Πολιτική Απορρήτου της Nutriq.",
+      submit: "Στείλε μήνυμα",
+      success: "Ευχαριστούμε! Θα επικοινωνήσουμε εντός 1 εργάσιμης ημέρας.",
+      altsTitle: "Άλλες οδοί επικοινωνίας",
+      emailAlt: "Στείλε email απευθείας",
+      emailVal: "hello@nutriq.gr",
+      demoTitle: "Προτιμάς ζωντανή παρουσίαση;",
+      demoBody: "Κράτησε 30 λεπτά για ένα demo, εξατομικευμένο στο profile σου.",
+      demoCta: "Κράτησε demo",
+    }
+  : {
+      eyebrow: "Contact",
+      title: "Let's talk.",
+      sub: "Tell us a bit about your practice and what you're looking for. We'll get back within 1 business day.",
+      nameL: "Full name",
+      emailL: "Email",
+      practiceL: "Practice size",
+      practiceOpts: ["Solo (1 dietitian)", "Small team (2-5)", "Mid-size clinic (6-15)", "Large center (15+)", "Other"],
+      topicL: "Topic",
+      topicOpts: ["Demo / Walkthrough", "Pricing & subscriptions", "Migration from another tool", "Enterprise / SLA", "Technical question", "Partnership"],
+      msgL: "Your message",
+      msgPh: "A few words about what you're looking for...",
+      consent: "I agree to Nutriq's Privacy Policy.",
+      submit: "Send message",
+      success: "Thanks! We'll get back within 1 business day.",
+      altsTitle: "Other ways to reach us",
+      emailAlt: "Email us directly",
+      emailVal: "hello@nutriq.gr",
+      demoTitle: "Prefer a live walkthrough?",
+      demoBody: "Book 30 minutes for a demo tailored to your profile.",
+      demoCta: "Book a demo",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "Επικοινωνία — Nutriq" : "Contact — Nutriq"}
+  description={copy.sub}
+>
+  <section class="relative pt-20 md:pt-24 pb-12 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-aurora opacity-80" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30" aria-hidden="true"></div>
+    <div class="container-x text-center">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 px-4 py-1.5 shadow-xs">
+        <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+        <span class="text-[12px] font-semibold tracking-[0.04em] uppercase text-gray-700">{copy.eyebrow}</span>
+      </div>
+      <h1 class="mt-7 text-display-lg text-ink text-balance">{copy.title}</h1>
+      <p class="mt-6 max-w-xl mx-auto text-[18px] leading-[1.55] text-gray-600 text-pretty">{copy.sub}</p>
+    </div>
+  </section>
+
+  <section class="pb-24">
+    <div class="container-x">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
+        <!-- Form -->
+        <div class="lg:col-span-2">
+          <form id="contact-form" class="rounded-2xl bg-white border border-gray-200 shadow-card p-8 md:p-10 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label for="name" class="block text-[13px] font-semibold text-ink mb-2">{copy.nameL} *</label>
+                <input id="name" name="name" type="text" required class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-[14px] text-ink placeholder:text-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none transition" />
+              </div>
+              <div>
+                <label for="email" class="block text-[13px] font-semibold text-ink mb-2">{copy.emailL} *</label>
+                <input id="email" name="email" type="email" required class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-[14px] text-ink placeholder:text-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none transition" />
+              </div>
+            </div>
+
+            <div>
+              <label for="practice" class="block text-[13px] font-semibold text-ink mb-2">{copy.practiceL}</label>
+              <select id="practice" name="practice" class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-[14px] text-ink focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none transition">
+                {copy.practiceOpts.map((o) => <option>{o}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[13px] font-semibold text-ink mb-2">{copy.topicL}</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {copy.topicOpts.map((o, i) => (
+                  <label class="flex items-center gap-2.5 rounded-lg border border-gray-200 px-3 py-2.5 cursor-pointer hover:border-brand-300 hover:bg-brand-50/30 transition-colors has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50">
+                    <input type="radio" name="topic" value={o} class="accent-brand-700" checked={i === 0} />
+                    <span class="text-[13px] text-ink">{o}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="block text-[13px] font-semibold text-ink mb-2">{copy.msgL} *</label>
+              <textarea id="message" name="message" rows="5" required placeholder={copy.msgPh} class="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-[14px] text-ink placeholder:text-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none transition resize-y"></textarea>
+            </div>
+
+            <label class="flex items-start gap-2.5 text-[13px] text-gray-600">
+              <input type="checkbox" required class="mt-0.5 accent-brand-700" />
+              <span>{copy.consent}</span>
+            </label>
+
+            <button type="submit" class="btn-primary w-full md:w-auto justify-center">
+              {copy.submit}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <div id="contact-success" class="hidden mt-2 rounded-lg bg-brand-50 border border-brand-200 px-4 py-3 text-[14px] text-brand-800">
+              ✓ {copy.success}
+            </div>
+          </form>
+        </div>
+
+        <!-- Sidebar with alternatives -->
+        <aside class="space-y-5">
+          <div class="rounded-2xl bg-white border border-gray-200 p-7">
+            <h3 class="text-[12px] font-bold tracking-[0.12em] uppercase text-brand-700">{copy.altsTitle}</h3>
+            <div class="mt-5">
+              <p class="text-[13px] text-gray-500 font-medium">{copy.emailAlt}</p>
+              <a href={`mailto:${copy.emailVal}`} class="mt-1 inline-flex items-center gap-1.5 text-[15px] font-semibold text-ink hover:text-brand-700 transition-colors">
+                {copy.emailVal}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2.5l3.5 3.5L4 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-brand-900 text-white p-7">
+            <h3 class="text-[18px] font-bold tracking-[-0.02em]">{copy.demoTitle}</h3>
+            <p class="mt-2 text-[14px] text-white/75 leading-relaxed">{copy.demoBody}</p>
+            <button class="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-white px-4 py-2.5 text-ink text-[13px] font-semibold hover:bg-cream-100 transition-colors">
+              {copy.demoCta}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2.5l3.5 3.5L4 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const success = document.getElementById("contact-success");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // TODO: wire to backend / Resend / Formspree
+    success?.classList.remove("hidden");
+    form.querySelectorAll("input, textarea, select, button").forEach((el) => el.setAttribute("disabled", "true"));
+  });
+</script>

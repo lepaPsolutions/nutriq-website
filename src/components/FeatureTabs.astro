@@ -1,0 +1,577 @@
+---
+import { getLangFromUrl, localizePath } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+interface TabContent {
+  id: string;
+  icon: string;
+  title: string;
+  badge?: string;
+  short: string;
+  description: string;
+  bullets: string[];
+  visual: "ai-generator" | "ai-assistant" | "client-portal" | "meal-planning" | "nutrition" | "food-database" | "teams";
+  href: string;
+  teamNote?: string;
+}
+
+const tabs: TabContent[] = lang === "el"
+  ? [
+      {
+        id: "ai-generator",
+        icon: `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z"/></svg>`,
+        title: "AI Παραγωγή Πλάνων",
+        short: "Έτοιμα πλάνα διατροφής σε δευτερόλεπτα",
+        description: "Η AI της Nutriq δεν είναι chatbot. Είναι μηχανισμός παραγωγής που σέβεται την επιστήμη, τις προτιμήσεις του πελάτη και την κρίση σου.",
+        bullets: [
+          "Στόχοι θερμίδων & macros σε ποσοστά",
+          "Εξαιρέσεις αλλεργιών & ομάδων τροφίμων",
+          "Έλεγχος χρόνου μαγειρέματος (min/max)",
+          "Tolerance ±20% στους κανόνες",
+          "1 credit ανά παραγωγή",
+          "Save ως template ή assign σε πελάτη",
+        ],
+        visual: "ai-generator",
+        href: localizePath("features/ai-generator", lang),
+        teamNote: "Στα Team plans: shared credit pool σε όλη την ομάδα.",
+      },
+      {
+        id: "ai-assistant",
+        icon: `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 8a5 5 0 1110 0 5 5 0 01-10 0zm5-7a1 1 0 011 1v1a1 1 0 11-2 0V2a1 1 0 011-1zm-7 7a1 1 0 011-1h1a1 1 0 110 2H2a1 1 0 01-1-1zm13-1a1 1 0 110 2h-1a1 1 0 110-2h1zM3.5 3.5a1 1 0 011.4 0l.7.7a1 1 0 01-1.4 1.4l-.7-.7a1 1 0 010-1.4zm9 0a1 1 0 010 1.4l-.7.7a1 1 0 01-1.4-1.4l.7-.7a1 1 0 011.4 0zM8 13a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z"/></svg>`,
+        title: "AI Assistant",
+        badge: "Σύντομα 2026",
+        short: "Συνεργάτης AI που γνωρίζει κάθε πελάτη σου",
+        description: "Φτιάχνουμε έναν AI σύμβουλο που ζει μέσα στη Nutriq, διαβάζει όλο το ιστορικό του πελάτη σου, και σου απαντάει με βάση τα δικά σου δεδομένα.",
+        bullets: [
+          "Φυσική γλώσσα ερωταποκρίσεων",
+          "Πρόσβαση σε πλήρες ιστορικό πελάτη",
+          "Data-grounded προτάσεις",
+          "Όχι third-party LLM — EU-hosted",
+          "Επιστροφή με source citations",
+          "Privacy by design",
+        ],
+        visual: "ai-assistant",
+        href: localizePath("features/ai-assistant", lang),
+      },
+      {
+        id: "client-portal",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="1" width="8" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="12.5" r="0.6" fill="currentColor"/></svg>`,
+        title: "Πύλη Πελάτη",
+        short: "Οι πελάτες σου online, με το brand σου",
+        description: "Κάθε πελάτης βλέπει το πλάνο, τις συνταγές, τη λίστα supermarket, και την πρόοδό του από κινητό — χωρίς εγκατάσταση εφαρμογής.",
+        bullets: [
+          "Progressive Web App (iOS + Android)",
+          "Step-by-step συνταγές με εικόνες",
+          "Έξυπνη λίστα supermarket",
+          "Ημερολόγιο πρόοδου με γραφήματα",
+          "Push notifications για γεύματα/ραντεβού",
+          "Brand customization στο Growth plans",
+        ],
+        visual: "client-portal",
+        href: localizePath("features/client-portal", lang),
+        teamNote: "Στα Team plans: ενιαίο branding για όλη την κλινική.",
+      },
+      {
+        id: "meal-planning",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="2.5" rx="0.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="7" width="12" height="2.5" rx="0.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="11" width="12" height="2.5" rx="0.5" stroke="currentColor" stroke-width="1.4"/></svg>`,
+        title: "Πλάνα & Templates",
+        short: "Φτιάχνεις μια φορά, χρησιμοποιείς για πάντα",
+        description: "Reusable templates που εφαρμόζονται σε πολλούς πελάτες. 5 γεύματα ανά ημέρα, ευέλικτος προγραμματισμός, αυτόματη ανίχνευση συγκρούσεων.",
+        bullets: [
+          "Templates με ένα κλικ σε πελάτη",
+          "5 meal slots ανά ημέρα",
+          "Conflict detection σε επικαλύψεις",
+          "Audit trail για team environments",
+          "Customizable PDF export",
+          "Email πελάτη με ένα κλικ",
+        ],
+        visual: "meal-planning",
+        href: localizePath("features/meal-planning", lang),
+        teamNote: "Στα Team plans: κοινή βιβλιοθήκη templates για όλη την ομάδα.",
+      },
+      {
+        id: "nutrition",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 2v6l4 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        title: "Διατροφική Ανάλυση",
+        short: "Macros + 17 micronutrients ανά πελάτη",
+        description: "Πλήρης κλινική ανάλυση: μακρο/μικροθρεπτικά, ανθρωπομετρικά, σύσταση σώματος, βιοχημικά τεστ — όλα σε ένα προφίλ.",
+        bullets: [
+          "13 βιταμίνες + 9 μέταλλα",
+          "BMI + body fat % + water %",
+          "Γραφήματα τάσης σε βάθος χρόνου",
+          "Καταχώρηση εργαστηριακών αποτελεσμάτων",
+          "Στόχοι βάρους με timeline",
+          "Ευθυγράμμιση με EFSA & USDA",
+        ],
+        visual: "nutrition",
+        href: localizePath("features/nutrition", lang),
+      },
+      {
+        id: "food-database",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><path d="M8 14s-5-3.5-5-7a3 3 0 015-2 3 3 0 015 2c0 3.5-5 7-5 7z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
+        title: "Βάση Τροφίμων",
+        short: "Χιλιάδες τρόφιμα + 13 διατροφικά πρότυπα",
+        description: "Πλήρης ελληνική και διεθνής βάση τροφίμων με ακριβή θρεπτικά. Συνταγές με βήμα-βήμα οδηγίες. Δικές σου εγγραφές, ιδιωτικά.",
+        bullets: [
+          "13 διατροφικά πρότυπα (Mediterranean, Keto, Vegan...)",
+          "Macros + 17 μικροθρεπτικά / τρόφιμο",
+          "Αυτόματη μετατροπή μονάδων μέτρησης",
+          "Ιδιωτικές συνταγές για το κέντρο σου",
+          "Εξαίρεση ολόκληρων ομάδων τροφίμων",
+          "Greek + Latin full-text search",
+        ],
+        visual: "food-database",
+        href: localizePath("features/food-database", lang),
+      },
+      {
+        id: "teams",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="6" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 13c.7-2.3 2.4-3.5 5-3.5s4.3 1.2 5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`,
+        title: "Διαχείριση Ομάδας",
+        short: "Ένα κέντρο, πολλοί διαιτολόγοι, μηδέν χάος",
+        description: "Διαχειρίσου την ομάδα σου από ένα dashboard. Ρόλοι, ξεχωριστά πελατολόγια, κοινά templates, team analytics.",
+        bullets: [
+          "Professional Admin & Διαιτολόγοι roles",
+          "Ξεχωριστό πελατολόγιο ανά μέλος",
+          "Μεταφορά πελατών με ένα κλικ",
+          "Κοινή βιβλιοθήκη templates",
+          "Performance analytics ανά διαιτολόγο",
+          "Email προσκλήσεις με invitation code",
+        ],
+        visual: "teams",
+        href: localizePath("features/teams", lang),
+      },
+    ]
+  : [
+      {
+        id: "ai-generator",
+        icon: `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z"/></svg>`,
+        title: "AI Meal Plan Generator",
+        short: "Compliant meal plans in seconds",
+        description: "Nutriq's AI is not a chatbot. It's a generation engine that respects nutrition science, your client's preferences, and your final judgment.",
+        bullets: [
+          "Calorie & macro targets as percentages",
+          "Allergy & food group exclusions",
+          "Prep time control (min/max)",
+          "±20% tolerance on rules",
+          "1 credit per generation",
+          "Save as template or assign to client",
+        ],
+        visual: "ai-generator",
+        href: localizePath("features/ai-generator", lang),
+        teamNote: "On Team plans: shared credit pool across the team.",
+      },
+      {
+        id: "ai-assistant",
+        icon: `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 8a5 5 0 1110 0 5 5 0 01-10 0zm5-7a1 1 0 011 1v1a1 1 0 11-2 0V2a1 1 0 011-1zm-7 7a1 1 0 011-1h1a1 1 0 110 2H2a1 1 0 01-1-1zm13-1a1 1 0 110 2h-1a1 1 0 110-2h1zM3.5 3.5a1 1 0 011.4 0l.7.7a1 1 0 01-1.4 1.4l-.7-.7a1 1 0 010-1.4zm9 0a1 1 0 010 1.4l-.7.7a1 1 0 01-1.4-1.4l.7-.7a1 1 0 011.4 0zM8 13a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z"/></svg>`,
+        title: "AI Assistant",
+        badge: "Coming 2026",
+        short: "AI collaborator that knows every client",
+        description: "We're building an AI consultant that lives inside Nutriq, reads your client's full history, and answers from your own data.",
+        bullets: [
+          "Natural language Q&A",
+          "Access to full client history",
+          "Data-grounded suggestions",
+          "Not third-party LLM — EU-hosted",
+          "Returns with source citations",
+          "Privacy by design",
+        ],
+        visual: "ai-assistant",
+        href: localizePath("features/ai-assistant", lang),
+      },
+      {
+        id: "client-portal",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="1" width="8" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="12.5" r="0.6" fill="currentColor"/></svg>`,
+        title: "Client Portal",
+        short: "Your clients online, with your brand",
+        description: "Every client sees their plan, recipes, grocery list, and progress on mobile — no app install required.",
+        bullets: [
+          "Progressive Web App (iOS + Android)",
+          "Step-by-step recipes with images",
+          "Smart supermarket list",
+          "Progress journal with charts",
+          "Push notifications for meals/appointments",
+          "Brand customization on Growth plans",
+        ],
+        visual: "client-portal",
+        href: localizePath("features/client-portal", lang),
+        teamNote: "On Team plans: unified branding across the entire clinic.",
+      },
+      {
+        id: "meal-planning",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="2.5" rx="0.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="7" width="12" height="2.5" rx="0.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="11" width="12" height="2.5" rx="0.5" stroke="currentColor" stroke-width="1.4"/></svg>`,
+        title: "Meal Plans & Templates",
+        short: "Build once, reuse forever",
+        description: "Reusable templates apply to multiple clients. 5 meals per day, flexible scheduling, automatic conflict detection.",
+        bullets: [
+          "One-click apply to client",
+          "5 meal slots per day",
+          "Conflict detection on overlaps",
+          "Audit trail for team environments",
+          "Customizable PDF export",
+          "Email to client with one click",
+        ],
+        visual: "meal-planning",
+        href: localizePath("features/meal-planning", lang),
+        teamNote: "On Team plans: shared template library across the team.",
+      },
+      {
+        id: "nutrition",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 2v6l4 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        title: "Nutritional Analysis",
+        short: "Macros + 17 micronutrients per client",
+        description: "Complete clinical analysis: macro/micros, anthropometrics, body composition, biochemical tests — all in one profile.",
+        bullets: [
+          "13 vitamins + 9 minerals",
+          "BMI + body fat % + water %",
+          "Trend charts over time",
+          "Lab result logging",
+          "Weight goals with timeline",
+          "Aligned with EFSA & USDA",
+        ],
+        visual: "nutrition",
+        href: localizePath("features/nutrition", lang),
+      },
+      {
+        id: "food-database",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><path d="M8 14s-5-3.5-5-7a3 3 0 015-2 3 3 0 015 2c0 3.5-5 7-5 7z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
+        title: "Food Database",
+        short: "Thousands of foods + 13 dietary patterns",
+        description: "Complete Greek and international food database with precise nutrients. Recipes with step-by-step instructions. Your own entries, private.",
+        bullets: [
+          "13 dietary patterns (Mediterranean, Keto, Vegan...)",
+          "Macros + 17 micronutrients per food",
+          "Automatic unit conversion",
+          "Private recipes for your center",
+          "Whole food group exclusion",
+          "Greek + Latin full-text search",
+        ],
+        visual: "food-database",
+        href: localizePath("features/food-database", lang),
+      },
+      {
+        id: "teams",
+        icon: `<svg viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="6" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 13c.7-2.3 2.4-3.5 5-3.5s4.3 1.2 5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`,
+        title: "Team Management",
+        short: "One center, many dietitians, zero chaos",
+        description: "Manage your team from one dashboard. Roles, separate caseloads, shared templates, team analytics.",
+        bullets: [
+          "Professional Admin & Dietitian roles",
+          "Separate caseload per member",
+          "Reassign clients in one click",
+          "Shared template library",
+          "Performance analytics per dietitian",
+          "Email invitations via invitation code",
+        ],
+        visual: "teams",
+        href: localizePath("features/teams", lang),
+      },
+    ];
+
+const sectionLabels = lang === "el"
+  ? { eyebrow: "Δυνατότητες", title: "Εξερεύνησε κάθε δυνατότητα.", sub: "Επίλεξε από αριστερά για να δεις τη λεπτομέρεια — όλα σε μία σελίδα.", learnMore: "Δες σελίδα feature" }
+  : { eyebrow: "Capabilities", title: "Explore every capability.", sub: "Pick from the left to see the detail — all on one page.", learnMore: "See feature page" };
+---
+
+<section id="features" class="section bg-cream-100 scroll-mt-header">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="overline">{sectionLabels.eyebrow}</p>
+      <h2 class="mt-5 text-display-md text-ink text-balance">{sectionLabels.title}</h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-gray-600">{sectionLabels.sub}</p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+      <!-- Left nav -->
+      <nav class="lg:col-span-4" aria-label="Features">
+        <div class="lg:sticky lg:top-28 space-y-1.5">
+          {tabs.map((tab, i) => (
+            <button
+              data-feature-tab={tab.id}
+              data-active={i === 0 ? "true" : "false"}
+              class="feature-tab-btn group w-full text-left flex items-start gap-3 rounded-xl p-3.5 transition-all border border-transparent data-[active=true]:bg-white data-[active=true]:border-gray-200 data-[active=true]:shadow-card hover:bg-white/50"
+            >
+              <span class="flex-shrink-0 mt-0.5 flex items-center justify-center h-9 w-9 rounded-lg bg-brand-50 text-brand-700 transition-colors group-data-[active=true]:bg-brand-900 group-data-[active=true]:text-white">
+                <span class="h-4 w-4" set:html={tab.icon}></span>
+              </span>
+              <span class="flex-1 min-w-0">
+                <span class="flex items-center gap-2">
+                  <span class="text-[15px] font-bold tracking-[-0.01em] text-ink">{tab.title}</span>
+                  {tab.badge && (
+                    <span class="inline-flex items-center rounded-full bg-peach-100 text-peach-800 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider">
+                      {tab.badge}
+                    </span>
+                  )}
+                </span>
+                <span class="block mt-0.5 text-[12px] text-gray-500 leading-snug">{tab.short}</span>
+              </span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0 mt-1 text-gray-300 transition-all group-data-[active=true]:text-brand-700 group-data-[active=true]:translate-x-0.5">
+                <path d="M4 2.5l3.5 4.5L4 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <!-- Content panel -->
+      <div class="lg:col-span-8" id="feature-content">
+        {tabs.map((tab, i) => (
+          <article
+            data-feature-panel={tab.id}
+            hidden={i !== 0}
+            class="feature-panel rounded-2xl bg-white border border-gray-200 shadow-card p-7 md:p-10"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="flex items-center justify-center h-9 w-9 rounded-lg bg-brand-900 text-white">
+                <span class="h-4 w-4" set:html={tab.icon}></span>
+              </span>
+              <div class="flex items-center gap-2">
+                <h3 class="text-[24px] font-bold tracking-[-0.02em] text-ink">{tab.title}</h3>
+                {tab.badge && (
+                  <span class="inline-flex items-center rounded-full bg-peach-100 text-peach-800 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                    {tab.badge}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <p class="mt-5 text-[17px] leading-[1.6] text-gray-700 max-w-xl text-pretty">
+              {tab.description}
+            </p>
+
+            {tab.teamNote && (
+              <div class="mt-5 inline-flex items-center gap-2 rounded-lg bg-cream-100 border border-cream-300 px-3 py-2">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="text-brand-700 flex-shrink-0">
+                  <circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+                  <circle cx="11" cy="6" r="2" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M1 13c.7-2.3 2.4-3.5 5-3.5s4.3 1.2 5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <span class="text-[12px] font-medium text-cream-800">{tab.teamNote}</span>
+              </div>
+            )}
+
+            <!-- Visual swap by id -->
+            <div class="mt-8">
+              {tab.visual === "ai-generator" && (
+                <div class="rounded-xl bg-gradient-to-br from-cream-100 to-cream-200 p-5 border border-gray-200">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="rounded-lg bg-white border border-gray-200 p-3">
+                      <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">Input</p>
+                      <div class="mt-2 space-y-1.5 text-[11px]">
+                        <div class="flex justify-between"><span class="text-gray-500">{lang === "el" ? "Θερμίδες" : "Calories"}</span><span class="font-semibold tabular-nums">1850</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">{lang === "el" ? "Πρωτεΐνη" : "Protein"}</span><span class="font-semibold tabular-nums">35%</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">{lang === "el" ? "Prep" : "Prep"}</span><span class="font-semibold">≤25min</span></div>
+                      </div>
+                    </div>
+                    <div class="rounded-lg bg-brand-900 text-white p-3">
+                      <p class="text-[10px] font-semibold uppercase tracking-wider text-peach-300">Output · 2.1s</p>
+                      <div class="mt-2 space-y-1 text-[11px]">
+                        <div class="flex justify-between"><span class="text-white/85 truncate">{lang === "el" ? "Βρώμη" : "Oats"}</span><span class="tabular-nums">320</span></div>
+                        <div class="flex justify-between"><span class="text-white/85 truncate">{lang === "el" ? "Γιαούρτι" : "Yogurt"}</span><span class="tabular-nums">180</span></div>
+                        <div class="flex justify-between"><span class="text-white/85 truncate">{lang === "el" ? "Σαλάτα" : "Salad"}</span><span class="tabular-nums">540</span></div>
+                        <div class="flex justify-between"><span class="text-white/85 truncate">{lang === "el" ? "Καρύδια" : "Walnuts"}</span><span class="tabular-nums">210</span></div>
+                        <div class="flex justify-between"><span class="text-white/85 truncate">{lang === "el" ? "Κοτόπουλο" : "Chicken"}</span><span class="tabular-nums">600</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {tab.visual === "ai-assistant" && (
+                <div class="rounded-xl bg-gradient-to-br from-peach-50 to-cream-100 p-5 border border-gray-200">
+                  <div class="space-y-2">
+                    <div class="flex justify-end">
+                      <div class="max-w-xs rounded-2xl rounded-tr-md bg-brand-900 text-white px-3.5 py-2.5 text-[13px]">
+                        {lang === "el" ? "Δείξε εξέλιξη βάρους Μαρίας τον τελευταίο μήνα." : "Show Maria's weight progress this month."}
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <div class="h-7 w-7 rounded-full bg-peach-100 flex items-center justify-center flex-shrink-0">
+                        <svg width="13" height="13" viewBox="0 0 16 16" fill="#F49862"><path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z"/></svg>
+                      </div>
+                      <div class="rounded-2xl rounded-tl-md bg-white border border-gray-200 px-3.5 py-2.5 text-[13px] text-ink leading-relaxed">
+                        {lang === "el" ? "Έχασε 1.8kg (78.2→76.4). Λίπος −1.1% (28.4→27.3). Σταθερή adherence στο πλάνο 1750kcal." : "Lost 1.8kg (78.2→76.4). Fat −1.1% (28.4→27.3). Consistent adherence to 1750kcal plan."}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {tab.visual === "client-portal" && (
+                <div class="rounded-xl bg-gradient-to-br from-brand-50 to-cream-100 p-5 border border-gray-200 flex items-center justify-center">
+                  <div class="relative w-[220px]">
+                    <div class="rounded-[28px] bg-ink p-2 shadow-card">
+                      <div class="rounded-[22px] bg-white p-3 h-[340px] overflow-hidden">
+                        <p class="text-[9px] text-gray-400 text-center">9:41</p>
+                        <p class="mt-2 text-[9px] font-semibold uppercase tracking-wider text-brand-700">{lang === "el" ? "Σήμερα" : "Today"}</p>
+                        <h4 class="text-[16px] font-bold text-ink">{lang === "el" ? "Γεια, Μαρία" : "Hi, Maria"}</h4>
+                        <p class="text-[10px] text-gray-500">1850 kcal · 5 {lang === "el" ? "γεύματα" : "meals"}</p>
+                        <div class="mt-3 space-y-1">
+                          {[
+                            { t: lang === "el" ? "Πρωινό" : "Breakfast", done: true },
+                            { t: lang === "el" ? "Δεκατιανό" : "Snack", done: true },
+                            { t: lang === "el" ? "Μεσημεριανό" : "Lunch", done: false },
+                            { t: lang === "el" ? "Απογευματινό" : "Snack", done: false },
+                            { t: lang === "el" ? "Βραδινό" : "Dinner", done: false },
+                          ].map((m) => (
+                            <div class={`flex items-center gap-1.5 rounded-md p-1.5 ${m.done ? "bg-gray-50 opacity-60" : "bg-brand-50/60"}`}>
+                              <div class={`h-3 w-3 rounded-full flex-shrink-0 flex items-center justify-center ${m.done ? "bg-brand-500" : "border border-gray-300"}`}>
+                                {m.done && <svg width="7" height="7" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+                              </div>
+                              <span class={`text-[10px] ${m.done ? "line-through text-gray-400" : "text-ink font-medium"}`}>{m.t}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {tab.visual === "meal-planning" && (
+                <div class="rounded-xl bg-gradient-to-br from-cream-100 to-cream-200 p-5 border border-gray-200">
+                  <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">{lang === "el" ? "Templates · 12 διαθέσιμα" : "Templates · 12 available"}</p>
+                  <div class="mt-3 grid grid-cols-2 gap-2">
+                    {[
+                      { t: "Mediterranean · 1800kcal", c: 24 },
+                      { t: "Keto · 1500kcal", c: 8 },
+                      { t: "High-protein · 2200kcal", c: 12 },
+                      { t: "Vegan · 1600kcal", c: 5 },
+                    ].map((tpl) => (
+                      <div class="rounded-lg bg-white border border-gray-200 p-3">
+                        <p class="text-[11px] font-semibold text-ink truncate">{tpl.t}</p>
+                        <p class="mt-1 text-[10px] text-gray-500"><span class="tabular-nums">{tpl.c}</span> {lang === "el" ? "ενεργοί πελάτες" : "active clients"}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {tab.visual === "nutrition" && (
+                <div class="rounded-xl bg-gradient-to-br from-peach-50 to-cream-100 p-5 border border-gray-200">
+                  <div class="rounded-lg bg-white border border-gray-200 p-4">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">Macros · day</span>
+                      <span class="text-[10px] text-gray-500 tabular-nums">1850 kcal</span>
+                    </div>
+                    <div class="mt-3 flex items-center gap-4">
+                      <svg viewBox="0 0 80 80" class="w-16 h-16">
+                        <circle cx="40" cy="40" r="32" fill="none" stroke="#F2F4F7" stroke-width="8"/>
+                        <circle cx="40" cy="40" r="32" fill="none" stroke="#0AA6A9" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="70" transform="rotate(-90 40 40)" stroke-linecap="round"/>
+                        <circle cx="40" cy="40" r="32" fill="none" stroke="#F7AE7E" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="135" transform="rotate(45 40 40)" stroke-linecap="round" opacity="0.8"/>
+                      </svg>
+                      <div class="space-y-1 flex-1 text-[11px]">
+                        <div class="flex justify-between"><span class="text-gray-600">Protein</span><span class="font-semibold tabular-nums">35%</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600">Carbs</span><span class="font-semibold tabular-nums">40%</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600">Fats</span><span class="font-semibold tabular-nums">25%</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 grid grid-cols-6 gap-1">
+                    {["A","B12","C","D","E","K"].map((v, i) => (
+                      <div class="text-center rounded-md bg-white border border-gray-200 px-1 py-1.5">
+                        <p class="text-[10px] font-bold text-brand-700">{v}</p>
+                        <p class="text-[9px] text-gray-400 tabular-nums">{[92,100,85,65,110,78][i]}%</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {tab.visual === "food-database" && (
+                <div class="rounded-xl bg-gradient-to-br from-brand-50 to-cream-100 p-5 border border-gray-200">
+                  <div class="rounded-lg bg-white border border-gray-200 p-3 flex items-center gap-2">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#667085" stroke-width="1.4"/><path d="M11 11l3 3" stroke="#667085" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    <input class="flex-1 text-[12px] bg-transparent placeholder:text-gray-400" placeholder={lang === "el" ? "φέτα..." : "feta..."} disabled />
+                  </div>
+                  <div class="mt-2 space-y-1">
+                    {[
+                      { n: "Feta cheese (Greek PDO)", k: "264 kcal · 14g protein" },
+                      { n: "Mizithra fresh", k: "98 kcal · 11g protein" },
+                      { n: "Anthotyro", k: "175 kcal · 12g protein" },
+                      { n: "Halloumi", k: "316 kcal · 22g protein" },
+                    ].map((f) => (
+                      <div class="rounded-lg bg-white border border-gray-200 p-2.5 flex items-center justify-between">
+                        <span class="text-[12px] font-medium text-ink">{f.n}</span>
+                        <span class="text-[10px] text-gray-500 tabular-nums">{f.k}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {tab.visual === "teams" && (
+                <div class="rounded-xl bg-gradient-to-br from-cream-100 to-cream-200 p-5 border border-gray-200">
+                  <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">{lang === "el" ? "Ομάδα · Diet Center Athens" : "Team · Diet Center Athens"}</p>
+                  <div class="mt-3 space-y-2">
+                    {[
+                      { i: "Σ", n: "Sophia Loizou", r: lang === "el" ? "Admin" : "Admin", c: 18 },
+                      { i: "Δ", n: "Dimitris K.", r: lang === "el" ? "Διαιτολόγος" : "Dietitian", c: 24 },
+                      { i: "Α", n: "Anna Markou", r: lang === "el" ? "Διαιτολόγος" : "Dietitian", c: 31 },
+                      { i: "Π", n: "Petros V.", r: lang === "el" ? "Διαιτολόγος" : "Dietitian", c: 12 },
+                    ].map((m) => (
+                      <div class="flex items-center gap-3 rounded-lg bg-white border border-gray-200 p-2.5">
+                        <div class="h-7 w-7 rounded-full bg-gradient-to-br from-brand-400 to-brand-700 text-white text-[12px] font-semibold flex items-center justify-center">{m.i}</div>
+                        <div class="flex-1 min-w-0">
+                          <p class="text-[12px] font-semibold text-ink truncate">{m.n}</p>
+                          <p class="text-[10px] text-gray-500">{m.r}</p>
+                        </div>
+                        <span class="text-[11px] font-semibold text-brand-700 tabular-nums">{m.c} {lang === "el" ? "πελάτες" : "clients"}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Bullets -->
+            <ul class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {tab.bullets.map((b) => (
+                <li class="flex items-center gap-2 text-[14px] text-ink">
+                  <span class="h-5 w-5 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
+                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2 2 5-5" stroke="#0AA6A9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+
+            <!-- Footer link to dedicated page (optional, for SEO + deep info) -->
+            <div class="mt-8 pt-6 border-t border-gray-100">
+              <a href={tab.href} class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-700 hover:text-brand-800 group">
+                {sectionLabels.learnMore}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform group-hover:translate-x-0.5">
+                  <path d="M4 2.5l3.5 3.5L4 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>("[data-feature-tab]");
+  const panels = document.querySelectorAll<HTMLElement>("[data-feature-panel]");
+
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.featureTab;
+      btns.forEach((b) => b.dataset.active = String(b.dataset.featureTab === target));
+      panels.forEach((p) => {
+        if (p.dataset.featurePanel === target) {
+          p.hidden = false;
+        } else {
+          p.hidden = true;
+        }
+      });
+      // Smooth scroll into view on mobile
+      if (window.innerWidth < 1024) {
+        const panel = document.querySelector<HTMLElement>(`[data-feature-panel="${target}"]`);
+        panel?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+</script>

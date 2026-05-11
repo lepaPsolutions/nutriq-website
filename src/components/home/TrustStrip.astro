@@ -1,0 +1,35 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Placeholder customer logos — replace with real ones
+const logos = [
+  "Diet Center Athens",
+  "Νutrition Lab",
+  "Healthy Habits",
+  "Mediterranean Nutrition",
+  "Bios Wellness",
+  "Pure Practice",
+  "Dietology Hub",
+];
+---
+
+<section class="border-y border-gray-100 bg-white py-10 overflow-hidden">
+  <div class="container-x">
+    <p class="text-center text-[12px] font-semibold uppercase tracking-[0.14em] text-gray-500 mb-8">{t("trust.title")}</p>
+
+    <div class="relative">
+      <div class="absolute left-0 top-0 bottom-0 z-10 w-20 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 z-10 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+
+      <div class="flex gap-12 md:gap-16 animate-marquee whitespace-nowrap">
+        {[...logos, ...logos].map((name) => (
+          <span class="text-[18px] md:text-[20px] font-bold tracking-[-0.025em] text-gray-300 flex-shrink-0">
+            {name}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

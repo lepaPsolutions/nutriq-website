@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SimpleFeaturePage from "../../../components/SimpleFeaturePage.astro";
+import FinalCTA from "../../../components/home/FinalCTA.astro";
+import { getLangFromUrl } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = {
+  eyebrow: "Team Management",
+  title: "One center. Many dietitians. Zero chaos.",
+  sub: "Manage your team, caseload, and center resources from one central dashboard. Distinct permissions, shared templates, aggregated analytics.",
+  bullets: [
+    { title: "Roles & permissions", body: "Professional Admin (center owner) and Dietitians (members). Each role sees only what they should." },
+    { title: "Separate caseloads", body: "Each dietitian sees only their own clients. The admin has access to all." },
+    { title: "Client reassignment", body: "When a dietitian leaves, their clients can be reassigned to another member in one click. History preserved." },
+    { title: "Shared templates", body: "All center templates and plans available across the team. Work scientifically, not in silos." },
+    { title: "Team analytics", body: "Performance metrics per dietitian: active clients, sessions, outcomes. Transparent for admins." },
+    { title: "Email invitations", body: "Invite a member with one email. Onboarding via secure invitation code. Revoke or change role anytime." },
+  ],
+  closingHeading: "Designed for centers of 2 to 50 people.",
+  closingBody: "As your center grows, coordinated work becomes more critical. Nutriq makes scaling easy — from 2 to 20 dietitians without the headache.",
+};
+---
+
+<BaseLayout title="Team Management — Nutriq" description={content.sub}>
+  <SimpleFeaturePage {...content} />
+  <FinalCTA />
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SimpleFeaturePage from "../../../components/SimpleFeaturePage.astro";
+import FinalCTA from "../../../components/home/FinalCTA.astro";
+import { getLangFromUrl } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = {
+  eyebrow: "Meal Plans & Templates",
+  title: "Plans built once. Reused forever.",
+  sub: "Create reusable templates that apply to multiple clients with one click. 5 meals per day, flexible scheduling, automatic conflict detection.",
+  bullets: [
+    { title: "Reusable templates", body: "Build one 1800kcal Mediterranean plan — apply it to 50 clients with adjustments." },
+    { title: "5 meal slots per day", body: "Breakfast, snack, lunch, snack, dinner — with recipes or freeform foods." },
+    { title: "Conflict detection", body: "Auto-alert when two plans overlap on the same client. No more accidental double-assignment." },
+    { title: "Audit trail", body: "See which dietitian edited each plan and when — critical for team environments." },
+    { title: "PDF export", body: "Customizable PDFs — short or long version, with or without macros visible." },
+    { title: "Email to client", body: "Send plan with one click — client receives professional email with your branding." },
+  ],
+  closingHeading: "Templates that give you time back.",
+  closingBody: "Most dietitians have 8-15 \"core\" plans they apply to 80% of their caseload. With Nutriq templates, that work happens once.",
+};
+---
+
+<BaseLayout title="Meal Planning — Nutriq" description={content.sub}>
+  <SimpleFeaturePage {...content} />
+  <FinalCTA />
+</BaseLayout>

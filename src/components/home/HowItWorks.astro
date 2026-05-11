@@ -1,0 +1,39 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps = [
+  { num: t("how.step-1.num"), title: t("how.step-1.title"), desc: t("how.step-1.desc") },
+  { num: t("how.step-2.num"), title: t("how.step-2.title"), desc: t("how.step-2.desc") },
+  { num: t("how.step-3.num"), title: t("how.step-3.title"), desc: t("how.step-3.desc") },
+];
+---
+
+<section class="section bg-cream-100">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="overline">{t("how.eyebrow")}</p>
+      <h2 class="mt-5 text-display-md text-ink text-balance">
+        {t("how.title")}
+      </h2>
+    </div>
+
+    <div class="mt-16 relative">
+      <!-- Connecting line -->
+      <div class="absolute top-9 left-9 right-9 h-px bg-gradient-to-r from-transparent via-brand-300 to-transparent hidden md:block" aria-hidden="true"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+        {steps.map((step) => (
+          <div class="relative">
+            <div class="relative inline-flex items-center justify-center h-[72px] w-[72px] rounded-2xl bg-white border border-gray-200 shadow-card">
+              <span class="text-2xl font-bold tracking-tight text-brand-700 tabular-nums">{step.num}</span>
+            </div>
+            <h3 class="mt-6 text-[22px] font-bold tracking-[-0.02em] text-ink">{step.title}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-gray-600 max-w-sm">{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

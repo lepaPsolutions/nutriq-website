@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import FinalCTA from "../../../components/home/FinalCTA.astro";
+import { getLangFromUrl, localizePath } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const copy = {
+  eyebrow: "Client Portal",
+  title: "Your clients, online — with your identity.",
+  sub: "Every client has their own login. They see their meal plan, recipes, weekly supermarket list, and progress — all from mobile, no app install required.",
+  cta: "Try it free",
+  featuresEye: "Client features",
+  featuresTitle: "Everything they need, none of your time.",
+  f1Title: "Real-time plan",
+  f1Body: "When you update the plan, the client sees it immediately — no resending PDFs.",
+  f2Title: "Step-by-step recipes",
+  f2Body: "Each meal has images, ingredients, steps. Friendly to first-time cooks.",
+  f3Title: "Smart supermarket list",
+  f3Body: "Auto-generated from the plan. Client checks off items as they buy.",
+  f4Title: "Progress journal",
+  f4Body: "Logs weight, body composition, notes. You see the data on your dashboard.",
+  f5Title: "Favorite foods & recipes",
+  f5Body: "The client builds their own library. You use it for the next plans.",
+  f6Title: "Push notifications",
+  f6Body: "Meal reminders, appointments, new plan alerts. No email required.",
+  modesEye: "How they use it",
+  modesTitle: "On every device",
+  mode1Title: "On mobile",
+  mode1Body: "Progressive Web App — works on iOS, Android, no store install. Add to home screen and done.",
+  mode2Title: "On desktop",
+  mode2Body: "Full web app. Ideal for clients who organize weekly shopping from a laptop.",
+  privacyTitle: "Securely isolated",
+  privacyBody: "Each client sees only their own data. You don't grant access to Nutriq — you grant access to their plan. Revocable at any time.",
+};
+
+const features = [
+  { title: copy.f1Title, body: copy.f1Body },
+  { title: copy.f2Title, body: copy.f2Body },
+  { title: copy.f3Title, body: copy.f3Body },
+  { title: copy.f4Title, body: copy.f4Body },
+  { title: copy.f5Title, body: copy.f5Body },
+  { title: copy.f6Title, body: copy.f6Body },
+];
+---
+
+<BaseLayout title="Client Portal — Nutriq" description={copy.sub}>
+  <section class="relative pt-20 md:pt-24 pb-16 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-aurora opacity-80" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30" aria-hidden="true"></div>
+    <div class="container-x">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 px-4 py-1.5 shadow-xs">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+            <span class="text-[12px] font-semibold tracking-[0.04em] uppercase text-gray-700">{copy.eyebrow}</span>
+          </div>
+          <h1 class="mt-6 text-display-lg text-ink text-balance">{copy.title}</h1>
+          <p class="mt-7 text-[18px] leading-[1.55] text-gray-600 text-pretty max-w-xl">{copy.sub}</p>
+          <div class="mt-10">
+            <a href={localizePath("pricing", lang)} class="btn-primary">
+              {copy.cta}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="relative mx-auto w-[280px]">
+            <div class="rounded-[40px] bg-ink p-3 shadow-figure">
+              <div class="rounded-[28px] bg-cream-50 p-4 overflow-hidden h-[560px]">
+                <div class="text-center pb-4 border-b border-gray-200">
+                  <p class="text-[11px] text-gray-400 font-medium">9:41</p>
+                  <p class="mt-2 text-[12px] font-medium text-brand-700">nutriq.gr</p>
+                </div>
+                <div class="mt-4">
+                  <p class="overline">Today</p>
+                  <h3 class="mt-2 text-2xl font-bold tracking-[-0.02em] text-ink">Good morning, Maria</h3>
+                  <p class="mt-1 text-[12px] text-gray-500">Week plan · 1850 kcal</p>
+                </div>
+                <div class="mt-4 space-y-2">
+                  {[
+                    { time: "Breakfast", t: "08:00", k: 320, done: true },
+                    { time: "Snack", t: "11:00", k: 180, done: true },
+                    { time: "Lunch", t: "14:00", k: 540, done: false },
+                    { time: "Snack", t: "17:00", k: 210, done: false },
+                    { time: "Dinner", t: "20:00", k: 600, done: false },
+                  ].map((m) => (
+                    <div class={`flex items-center gap-2 rounded-xl p-2 ${m.done ? "bg-cream-100 opacity-60" : "bg-cream-100"}`}>
+                      <div class={`h-5 w-5 rounded-full flex items-center justify-center flex-shrink-0 ${m.done ? "bg-brand-500" : "border-2 border-cream-400"}`}>
+                        {m.done && <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+                      </div>
+                      <div class="flex-1">
+                        <p class={`text-[12px] font-medium ${m.done ? "line-through text-ink/50" : "text-ink"}`}>{m.time}</p>
+                        <p class="text-[10px] text-ink/45">{m.t}</p>
+                      </div>
+                      <p class="text-[11px] tabular-nums text-ink/65">{m.k}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="absolute top-3 left-1/2 -translate-x-1/2 h-5 w-24 rounded-b-2xl bg-ink"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream-100">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="overline">{copy.featuresEye}</p>
+        <h2 class="mt-5 text-display-md text-ink text-balance">{copy.featuresTitle}</h2>
+      </div>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {features.map((f) => (
+          <div class="rounded-2xl bg-white p-7 border border-gray-200 shadow-card">
+            <h3 class="text-xl font-bold tracking-[-0.02em] text-ink">{f.title}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-gray-600">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="overline">{copy.modesEye}</p>
+        <h2 class="mt-5 text-display-md text-ink text-balance">{copy.modesTitle}</h2>
+      </div>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="rounded-3xl bg-cream-100 p-8 border border-gray-200">
+          <div class="text-3xl">📱</div>
+          <h3 class="mt-5 text-2xl font-bold tracking-[-0.02em] text-ink">{copy.mode1Title}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-gray-600">{copy.mode1Body}</p>
+        </div>
+        <div class="rounded-3xl bg-cream-100 p-8 border border-gray-200">
+          <div class="text-3xl">💻</div>
+          <h3 class="mt-5 text-2xl font-bold tracking-[-0.02em] text-ink">{copy.mode2Title}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-gray-600">{copy.mode2Body}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <div class="max-w-2xl mx-auto rounded-3xl bg-brand-900 text-cream-100 p-10 md:p-14 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-[-0.02em] text-cream-50 text-balance">{copy.privacyTitle}</h2>
+        <p class="mt-5 text-[16px] leading-relaxed text-cream-200/85 text-pretty">{copy.privacyBody}</p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>

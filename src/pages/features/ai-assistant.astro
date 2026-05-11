@@ -1,0 +1,176 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getLangFromUrl, useTranslations, localizePath } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const copy = lang === "el"
+  ? {
+      badge: "Σύντομα · 2026",
+      eyebrow: "AI Assistant",
+      title: "Ένας συνεργάτης που γνωρίζει κάθε πελάτη σου.",
+      sub: "Φτιάχνουμε έναν AI σύμβουλο που ζει μέσα στη Nutriq και έχει διαβάσει όλο το ιστορικό του πελάτη σου. Θα σου απαντάει στα ελληνικά, με βάση τις δικές σου σημειώσεις, μετρήσεις και πλάνα.",
+      cta: "Μπες στη λίστα early access",
+      placeholder: "Email επαγγελματικό",
+      consent: "Συμφωνώ να λάβω 1 email όταν είναι έτοιμο. Χωρίς spam.",
+      submit: "Έγκριση",
+      success: "Είσαι μέσα. Θα σου στείλουμε αμέσως μόλις είναι έτοιμο.",
+      example1Title: "Γρήγορες ερωτήσεις, συγκεκριμένες απαντήσεις",
+      example1Q: "Δείξε μου την εξέλιξη βάρους της Μαρίας τον τελευταίο μήνα.",
+      example1A: "Η Μαρία έχασε 1.8kg τις τελευταίες 4 εβδομάδες (από 78.2kg σε 76.4kg). Το ποσοστό λίπους μειώθηκε κατά 1.1% (28.4% → 27.3%). Συνεπής adherence στο πλάνο 1750kcal.",
+      example2Title: "Προτάσεις βασισμένες σε δεδομένα",
+      example2Q: "Ο Δημήτρης σταμάτησε να χάνει βάρος. Τι να αλλάξω;",
+      example2A: "Έχει plateau εδώ και 12 ημέρες. Το activity level του (medium) δηλώθηκε προ 6 εβδομάδων — ίσως να ξανα-υπολογιστεί. Επίσης τα macros είναι 50% υδατανθρακες — δοκιμάστε refeed cycle ή προσωρινή μείωση 100-150kcal.",
+      footnoteTitle: "Privacy by design",
+      footnoteBody: "Τα δεδομένα των πελατών σου παραμένουν στους δικούς σας servers (EU-hosted). Δεν αποστέλλονται σε third-party LLM providers. Όλη η AI έρευνα γίνεται με εξειδικευμένο μοντέλο που εκπαιδεύεται μόνο σε επιστημονικά διατροφικά δεδομένα.",
+    }
+  : {
+      badge: "Coming · 2026",
+      eyebrow: "AI Assistant",
+      title: "A collaborator who knows every one of your clients.",
+      sub: "We're building an AI consultant that lives inside Nutriq and has read your client's entire history. It will answer in your language, based on your own notes, measurements, and plans.",
+      cta: "Join the early access list",
+      placeholder: "Professional email",
+      consent: "I agree to receive 1 email when it's ready. No spam.",
+      submit: "Submit",
+      success: "You're in. We'll email you the moment it's ready.",
+      example1Title: "Quick questions, specific answers",
+      example1Q: "Show me Maria's weight progression over the last month.",
+      example1A: "Maria lost 1.8kg over the last 4 weeks (from 78.2kg to 76.4kg). Body fat dropped 1.1% (28.4% → 27.3%). Consistent adherence to the 1750kcal plan.",
+      example2Title: "Data-grounded suggestions",
+      example2Q: "Dimitris has stalled on weight loss. What should I change?",
+      example2A: "He's been in a plateau for 12 days. His activity level (medium) was set 6 weeks ago — may need recalculating. Also macros are 50% carbs — consider a refeed cycle or temporary 100-150kcal reduction.",
+      footnoteTitle: "Privacy by design",
+      footnoteBody: "Your client data stays on our EU-hosted servers. It is NOT sent to third-party LLM providers. All AI reasoning happens through a dedicated model trained only on peer-reviewed nutrition data.",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "AI Assistant (Σύντομα) — Nutriq" : "AI Assistant (Coming Soon) — Nutriq"}
+  description={copy.sub}
+>
+  <!-- Hero -->
+  <section class="relative pt-20 md:pt-24 pb-24 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-aurora" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30" aria-hidden="true"></div>
+
+    <div class="container-x text-center">
+      <span class="inline-flex items-center gap-2 rounded-full bg-peach-100 border border-peach-300/50 px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-peach-800">
+        <span class="relative flex h-1.5 w-1.5">
+          <span class="absolute inline-flex h-full w-full rounded-full bg-peach-500 animate-pulse-ring"></span>
+          <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-peach-600"></span>
+        </span>
+        {copy.badge}
+      </span>
+      <h1 class="mt-6 text-display-xl text-ink text-balance max-w-4xl mx-auto">
+        {copy.title}
+      </h1>
+      <p class="mt-7 max-w-2xl mx-auto text-[18px] leading-[1.55] text-gray-600 text-pretty">
+        {copy.sub}
+      </p>
+
+      <!-- Waitlist form -->
+      <form id="waitlist-form" class="mt-12 max-w-md mx-auto">
+        <div class="flex flex-col sm:flex-row gap-2 p-2 rounded-full bg-cream-50 border border-ink/10 shadow-card focus-within:border-brand-400 focus-within:shadow-card-hover transition-all">
+          <input
+            type="email"
+            required
+            id="waitlist-email"
+            placeholder={copy.placeholder}
+            class="flex-1 bg-transparent px-4 py-2.5 text-[15px] text-ink placeholder:text-ink/40 focus:outline-none"
+          />
+          <button type="submit" class="rounded-full bg-brand-900 px-6 py-3 text-cream-50 text-[14px] font-medium hover:bg-brand-800 transition-colors">
+            {copy.submit}
+          </button>
+        </div>
+        <label class="mt-4 flex items-start gap-2 text-[12px] text-ink/55 max-w-sm mx-auto text-left">
+          <input type="checkbox" required class="mt-0.5 accent-brand-700" />
+          <span>{copy.consent}</span>
+        </label>
+        <div id="waitlist-success" class="mt-6 hidden text-[14px] text-brand-700 bg-brand-50 px-5 py-3 rounded-2xl border border-brand-200/40">
+          ✓ {copy.success}
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Example interactions -->
+  <section class="section bg-cream-200/40">
+    <div class="container-x">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Example 1 -->
+        <div class="rounded-3xl bg-cream-50 p-8 shadow-card border border-ink/8">
+          <p class="overline">{copy.example1Title}</p>
+          <div class="mt-6 space-y-4">
+            <!-- User -->
+            <div class="flex justify-end">
+              <div class="max-w-xs rounded-2xl rounded-tr-md bg-brand-900 text-cream-50 px-4 py-3 text-[14px] leading-relaxed">
+                {copy.example1Q}
+              </div>
+            </div>
+            <!-- AI -->
+            <div class="flex items-start gap-2.5">
+              <div class="flex-shrink-0 h-8 w-8 rounded-full bg-peach-100 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7 1l1.5 4 4 1.5-4 1.5L7 12l-1.5-4-4-1.5 4-1.5z" fill="#F49862"/>
+                </svg>
+              </div>
+              <div class="rounded-2xl rounded-tl-md bg-cream-100 px-4 py-3 text-[14px] leading-relaxed text-ink/85">
+                {copy.example1A}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 2 -->
+        <div class="rounded-3xl bg-cream-50 p-8 shadow-card border border-ink/8">
+          <p class="overline">{copy.example2Title}</p>
+          <div class="mt-6 space-y-4">
+            <div class="flex justify-end">
+              <div class="max-w-xs rounded-2xl rounded-tr-md bg-brand-900 text-cream-50 px-4 py-3 text-[14px] leading-relaxed">
+                {copy.example2Q}
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <div class="flex-shrink-0 h-8 w-8 rounded-full bg-peach-100 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7 1l1.5 4 4 1.5-4 1.5L7 12l-1.5-4-4-1.5 4-1.5z" fill="#F49862"/>
+                </svg>
+              </div>
+              <div class="rounded-2xl rounded-tl-md bg-cream-100 px-4 py-3 text-[14px] leading-relaxed text-ink/85">
+                {copy.example2A}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy footnote -->
+  <section class="section">
+    <div class="container-x">
+      <div class="max-w-2xl mx-auto rounded-3xl bg-brand-900 text-cream-100 p-10 md:p-14 text-center">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" class="mx-auto text-peach-400">
+          <path d="M18 4l12 5v9c0 7-5 13-12 14-7-1-12-7-12-14V9l12-5z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M13 18l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2 class="mt-6 font-display text-3xl md:text-4xl text-cream-50 text-balance">{copy.footnoteTitle}</h2>
+        <p class="mt-5 text-[16px] leading-relaxed text-cream-200/85 text-pretty">{copy.footnoteBody}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById("waitlist-form") as HTMLFormElement | null;
+  const success = document.getElementById("waitlist-success");
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    // TODO: wire to backend endpoint. For now, optimistic UI.
+    form.querySelector("input[type=email]")?.setAttribute("disabled", "true");
+    form.querySelector("button[type=submit]")?.setAttribute("disabled", "true");
+    success?.classList.remove("hidden");
+  });
+</script>

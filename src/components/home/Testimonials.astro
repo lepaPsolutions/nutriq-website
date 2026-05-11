@@ -1,0 +1,85 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const testimonials = lang === "el"
+  ? [
+      {
+        quote: "Πέρασα από τρία διαφορετικά εργαλεία πριν τη Nutriq. Η διαφορά είναι ότι η Nutriq νοιάζεται πραγματικά πώς δουλεύει ένας διαιτολόγος — δεν είναι generic SaaS.",
+        name: "Σοφία Λ.",
+        role: "Κλινική διαιτολόγος, Αθήνα",
+      },
+      {
+        quote: "Η AI παραγωγή πλάνων μου επιστρέφει ~6 ώρες την εβδομάδα. Αυτές οι ώρες πάνε σε follow-ups με πελάτες — και φαίνεται στα αποτελέσματα.",
+        name: "Δημήτρης Κ.",
+        role: "Διαιτολόγος, Θεσσαλονίκη",
+      },
+      {
+        quote: "Η πύλη πελάτη ήταν game-changer. Οι πελάτες μου δε χάνουν πια το PDF στα emails — είναι όλα εκεί, στο κινητό τους.",
+        name: "Άννα Μ.",
+        role: "Διαιτολογικό κέντρο, Πάτρα",
+      },
+    ]
+  : [
+      {
+        quote: "I went through three different tools before Nutriq. The difference is that Nutriq actually understands how a dietitian works — it's not generic SaaS.",
+        name: "Sophia L.",
+        role: "Clinical dietitian, Athens",
+      },
+      {
+        quote: "The AI plan generator gives me back ~6 hours a week. Those hours go into client follow-ups — and you can see it in the outcomes.",
+        name: "Dimitris K.",
+        role: "Dietitian, Thessaloniki",
+      },
+      {
+        quote: "The client portal was a game-changer. My clients no longer lose the PDF in their email — it's all there, on their phone.",
+        name: "Anna M.",
+        role: "Nutrition center, Patras",
+      },
+    ];
+---
+
+<section class="section bg-white">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="overline">{t("testimonials.eyebrow")}</p>
+      <h2 class="mt-5 text-display-md text-ink text-balance">
+        {t("testimonials.title")}
+      </h2>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-5">
+      {testimonials.map((tt, i) => (
+        <figure class={`rounded-2xl p-7 md:p-8 transition-all ${
+          i === 0
+            ? "bg-brand-900 text-white"
+            : "bg-white border border-gray-200 shadow-card hover:shadow-card-hover hover:-translate-y-0.5"
+        }`}>
+          <!-- Stars -->
+          <div class="flex items-center gap-0.5">
+            {[1,2,3,4,5].map(() => (
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z" fill={i === 0 ? "#F7AE7E" : "#F49862"}/>
+              </svg>
+            ))}
+          </div>
+
+          <blockquote class={`mt-5 text-[17px] leading-[1.55] tracking-[-0.005em] text-balance ${i === 0 ? "text-white" : "text-ink"}`}>
+            "{tt.quote}"
+          </blockquote>
+
+          <figcaption class={`mt-8 pt-6 border-t flex items-center gap-3 ${i === 0 ? "border-white/15" : "border-gray-100"}`}>
+            <div class={`h-10 w-10 rounded-full flex items-center justify-center font-semibold text-[15px] ${i === 0 ? "bg-peach-400 text-brand-900" : "bg-brand-50 text-brand-700"}`}>
+              {tt.name.charAt(0)}
+            </div>
+            <div>
+              <p class={`text-[14px] font-semibold ${i === 0 ? "text-white" : "text-ink"}`}>{tt.name}</p>
+              <p class={`text-[12px] ${i === 0 ? "text-white/60" : "text-gray-500"}`}>{tt.role}</p>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

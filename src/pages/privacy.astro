@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalPage from "../components/LegalPage.astro";
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = lang === "el"
+  ? {
+      eyebrow: "Νομικά",
+      title: "Πολιτική Απορρήτου",
+      lastUpdated: "Τελευταία ενημέρωση: Μάιος 2026",
+      intro: "Η InHealion (\"Nutriq\", \"εμείς\") σέβεται την ιδιωτικότητά σας. Αυτή η Πολιτική περιγράφει πώς συλλέγουμε, χρησιμοποιούμε, και προστατεύουμε τα προσωπικά δεδομένα σας όταν χρησιμοποιείτε τη Nutriq.",
+      sections: [
+        { heading: "Δεδομένα που συλλέγουμε", body: "Συλλέγουμε προσωπικά στοιχεία (όνομα, email, τηλέφωνο), στοιχεία πρακτικής (όνομα κέντρου, ΑΦΜ, διεύθυνση), και δεδομένα χρήσης (logs, IP, browser type). Όταν είστε διαιτολόγος, καταχωρείτε δεδομένα πελατών σας στην πλατφόρμα — αυτά είναι δικά σας δεδομένα, εσείς ο controller, εμείς ο processor." },
+        { heading: "Πώς χρησιμοποιούμε τα δεδομένα", body: "Για την παροχή και λειτουργία της υπηρεσίας, την επικοινωνία μαζί σας, τη βελτίωση της πλατφόρμας, και τη συμμόρφωση με νομικές υποχρεώσεις. Δεν πουλάμε δεδομένα σε τρίτους, ποτέ." },
+        { heading: "Φιλοξενία & ασφάλεια", body: "Όλα τα δεδομένα φιλοξενούνται σε AWS infrastructure στην ΕΕ (eu-south-1, Μιλάνο). Χρησιμοποιούμε JWT encryption, TLS 1.3, encryption at rest, και κρυπτογραφημένα backups. Πρόσβαση μόνο σε εξουσιοδοτημένο προσωπικό." },
+        { heading: "Cookies & analytics", body: "Χρησιμοποιούμε αναγκαία cookies (authentication) και προαιρετικά analytics cookies (Plausible/Umami — privacy-friendly, χωρίς personal data). Μπορείτε να αρνηθείτε τα analytics από το cookie banner." },
+        { heading: "Δικαιώματά σας (GDPR)", body: "Έχετε δικαίωμα πρόσβασης, διόρθωσης, διαγραφής, περιορισμού επεξεργασίας, φορητότητας δεδομένων, και αντίρρησης. Για άσκηση δικαιωμάτων στείλτε email στο privacy@nutriq.gr και απαντάμε εντός 30 ημερών." },
+        { heading: "Διατήρηση δεδομένων", body: "Διατηρούμε τα δεδομένα σας όσο διαρκεί η συνδρομή σας + 90 ημέρες grace period μετά την ακύρωση. Μετά διαγράφονται οριστικά. Δεδομένα τιμολόγησης διατηρούνται 10 έτη βάσει ελληνικής νομοθεσίας." },
+        { heading: "Επικοινωνία", body: "Για ερωτήσεις σχετικά με αυτή την πολιτική: privacy@nutriq.gr. Data Protection Officer: dpo@nutriq.gr." },
+      ],
+    }
+  : {
+      eyebrow: "Legal",
+      title: "Privacy Policy",
+      lastUpdated: "Last updated: May 2026",
+      intro: "InHealion (\"Nutriq\", \"we\") respects your privacy. This Policy describes how we collect, use, and protect your personal data when you use Nutriq.",
+      sections: [
+        { heading: "Data we collect", body: "We collect personal information (name, email, phone), practice info (center name, tax ID, address), and usage data (logs, IP, browser type). When you're a dietitian, you enter client data into the platform — that's your data, you're the controller, we're the processor." },
+        { heading: "How we use data", body: "To provide and operate the service, communicate with you, improve the platform, and comply with legal obligations. We never sell data to third parties." },
+        { heading: "Hosting & security", body: "All data is hosted on AWS infrastructure in the EU (eu-south-1, Milan). We use JWT encryption, TLS 1.3, encryption at rest, and encrypted backups. Access limited to authorized personnel only." },
+        { heading: "Cookies & analytics", body: "We use essential cookies (authentication) and optional analytics cookies (Plausible/Umami — privacy-friendly, no personal data). You can decline analytics from the cookie banner." },
+        { heading: "Your rights (GDPR)", body: "You have rights of access, rectification, erasure, restriction of processing, data portability, and objection. To exercise rights email privacy@nutriq.gr and we reply within 30 days." },
+        { heading: "Data retention", body: "We retain your data for the duration of your subscription + 90 days grace period after cancellation. Then permanently deleted. Billing data retained 10 years per Greek tax law." },
+        { heading: "Contact", body: "For questions about this policy: privacy@nutriq.gr. Data Protection Officer: dpo@nutriq.gr." },
+      ],
+    };
+---
+
+<BaseLayout title={lang === "el" ? "Πολιτική Απορρήτου — Nutriq" : "Privacy Policy — Nutriq"} description={content.intro}>
+  <LegalPage {...content} />
+</BaseLayout>

@@ -1,0 +1,161 @@
+---
+import Logo from "./Logo.astro";
+import { getLangFromUrl, useTranslations, localizePath, getAltLangPath } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const altPath = getAltLangPath(Astro.url.pathname, lang);
+
+// Helper for anchor links to home sections
+const homeAnchor = (id: string) => (lang === "el" ? `/#${id}` : `/en/#${id}`);
+
+const navItems = [
+  { href: homeAnchor("features"), label: t("nav.features"), type: "anchor", anchor: "features" },
+  { href: homeAnchor("pricing"), label: t("nav.pricing"), type: "anchor", anchor: "pricing" },
+  { href: homeAnchor("about"), label: t("nav.about"), type: "anchor", anchor: "about" },
+  { href: localizePath("blog", lang), label: t("nav.blog"), type: "page" },
+];
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-50 w-full transition-all duration-200"
+  data-scrolled="false"
+>
+  <div class="absolute inset-0 -z-10 bg-white/85 backdrop-blur-md opacity-0 transition-opacity duration-200 [#site-header[data-scrolled=true]_&]:opacity-100"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-px bg-gray-200 opacity-0 transition-opacity duration-200 [#site-header[data-scrolled=true]_&]:opacity-100"></div>
+
+  <nav class="container-x flex h-16 items-center justify-between md:h-[72px]">
+    <Logo />
+
+    <ul class="hidden lg:flex items-center gap-1">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            data-nav-anchor={item.type === "anchor" ? item.anchor : undefined}
+            class="rounded-lg px-3.5 py-2 text-[14px] text-gray-600 font-medium tracking-[-0.005em] transition-colors hover:bg-gray-50 hover:text-ink"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-1.5 md:gap-2">
+      <a
+        href={altPath}
+        class="hidden md:inline-flex items-center justify-center h-9 px-3 rounded-lg text-[12px] font-semibold tracking-[0.04em] text-gray-600 hover:bg-gray-50 hover:text-ink transition-colors"
+        aria-label="Switch language"
+      >
+        {t("lang.switch")}
+      </a>
+
+      <a
+        href="https://nutriq.gr/authentication/login"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden md:inline-flex items-center text-[14px] font-medium text-gray-600 hover:text-ink transition-colors px-3"
+      >
+        {t("nav.login")}
+      </a>
+
+      <a
+        href={localizePath("pricing", lang)}
+        class="inline-flex items-center gap-1.5 rounded-lg bg-brand-900 px-4 py-2.5 text-white text-[14px] font-semibold transition-all hover:bg-brand-800 hover:shadow-glow active:scale-[0.98]"
+      >
+        {t("nav.start")}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+
+      <button
+        id="mobile-menu-toggle"
+        class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg hover:bg-gray-100 transition-colors"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="text-ink">
+          <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden hidden border-t border-gray-200 bg-white"
+  >
+    <ul class="container-x py-4 space-y-1">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            data-nav-anchor={item.type === "anchor" ? item.anchor : undefined}
+            class="block px-3 py-3 text-[15px] text-ink font-medium rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+      <li class="pt-2 mt-2 border-t border-gray-200">
+        <a href={altPath} class="block px-3 py-3 text-[15px] text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
+          {lang === "el" ? "English" : "Ελληνικά"}
+        </a>
+      </li>
+      <li>
+        <a href="https://nutriq.gr/authentication/login" target="_blank" rel="noopener noreferrer" class="block px-3 py-3 text-[15px] text-ink font-medium rounded-lg hover:bg-gray-50 transition-colors">
+          {t("nav.login")}
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  // Sticky header background
+  const header = document.getElementById("site-header");
+  if (header) {
+    const update = () => {
+      header.setAttribute("data-scrolled", String(window.scrollY > 8));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+  }
+
+  // Mobile menu
+  const toggle = document.getElementById("mobile-menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      const isOpen = menu.classList.toggle("hidden");
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+  }
+
+  // Smart anchor scroll — when on home, scroll smoothly to section instead of navigating
+  const isHome = () => {
+    const path = window.location.pathname;
+    return path === "/" || path === "/en/" || path === "/en";
+  };
+  document.querySelectorAll<HTMLAnchorElement>("[data-nav-anchor]").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      if (isHome()) {
+        const anchor = link.dataset.navAnchor;
+        if (anchor) {
+          e.preventDefault();
+          const target = document.getElementById(anchor);
+          target?.scrollIntoView({ behavior: "smooth", block: "start" });
+          // Close mobile menu if open
+          menu?.classList.add("hidden");
+          toggle?.setAttribute("aria-expanded", "false");
+          // Update URL hash without jumping
+          history.pushState(null, "", `#${anchor}`);
+        }
+      }
+      // If not on home, browser navigates normally (full page load to home + anchor)
+    });
+  });
+</script>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getLangFromUrl, localizePath } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const copy = lang === "el"
+  ? {
+      label: "404",
+      title: "Αυτή η σελίδα έχει χαθεί στο menu.",
+      sub: "Πιθανώς μετακινήθηκε ή ποτέ δεν υπήρξε. Πάμε πίσω στην κουζίνα.",
+      home: "Επιστροφή στην αρχική",
+      browse: "Δες όλες τις δυνατότητες",
+    }
+  : {
+      label: "404",
+      title: "This page got lost in the menu.",
+      sub: "Probably moved or never existed. Let's head back to the kitchen.",
+      home: "Back to home",
+      browse: "Explore features",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "Σελίδα δε βρέθηκε — Nutriq" : "Page not found — Nutriq"}
+  description={copy.sub}
+  noindex={true}
+>
+  <section class="relative min-h-[70vh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-aurora opacity-80" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30" aria-hidden="true"></div>
+
+    <div class="container-x text-center">
+      <p class="text-[140px] md:text-[200px] font-bold leading-none tracking-tightest text-brand-900/15 select-none">
+        {copy.label}
+      </p>
+      <h1 class="-mt-12 md:-mt-20 text-display-md text-ink text-balance max-w-2xl mx-auto">
+        {copy.title}
+      </h1>
+      <p class="mt-6 max-w-lg mx-auto text-[17px] leading-[1.55] text-gray-600 text-pretty">
+        {copy.sub}
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center items-center gap-3">
+        <a href={localizePath("", lang)} class="btn-primary">
+          {copy.home}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href={lang === "el" ? "/#features" : "/en/#features"} class="btn-ghost">{copy.browse}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

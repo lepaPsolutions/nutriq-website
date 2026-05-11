@@ -1,0 +1,240 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FinalCTA from "../../components/home/FinalCTA.astro";
+import { getLangFromUrl, useTranslations, localizePath } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const copy = lang === "el"
+  ? {
+      eyebrow: "AI Παραγωγή Πλάνων",
+      title: "Από μηδέν σε πλάνο εβδομάδας — σε 2 δευτερόλεπτα.",
+      sub: "Η AI της Nutriq δεν είναι chatbot. Είναι ένας μηχανισμός παραγωγής που σέβεται τους κανόνες της διατροφικής επιστήμης, τις προτιμήσεις του πελάτη και την τελική σου κρίση.",
+      cta1: "Δοκίμασε δωρεάν",
+      cta2: "Δες το ζωντανά",
+      section1Eye: "Πώς δουλεύει",
+      section1Title: "Όχι hallucinated meals. Πραγματικές συνταγές, πραγματικά macros.",
+      section1Body: "Δώσε στην AI ένα στόχο: \"1850 kcal, 35% πρωτεΐνη, χωρίς γαλακτοκομικά, χρόνος μαγειρέματος ≤ 25 λεπτά\". Η μηχανή ψάχνει τη βιβλιοθήκη σου (όχι το διαδίκτυο), επιλέγει συνταγές που ταιριάζουν, και υπολογίζει macros + micros με ακρίβεια. Αν δεν βρει συνδυασμό που πληροί τους κανόνες σε ±20%, ζητάει χαλάρωση στους περιορισμούς αντί να φαντασιωθεί.",
+      featuresEye: "Δυνατότητες",
+      featuresTitle: "Έλεγχος σε κάθε αξονα",
+      f1Title: "Στόχοι θερμίδων & macros",
+      f1Body: "Πες κάθε φορά τι στοχεύεις. Πρωτεΐνη/υδατάνθρακες/λίπη ως ποσοστά. Tolerance εντός 20%.",
+      f2Title: "Εξαιρέσεις & αλλεργίες",
+      f2Body: "Αυτόματη απαγόρευση συστατικών που έχει εξαιρέσει ο πελάτης. Επίσης ολόκληρες ομάδες (γαλακτοκομικά, ξηροί καρποί).",
+      f3Title: "Χρόνος προετοιμασίας",
+      f3Body: "Όρισε min/max prep time. Ιδανικό για πελάτες που μαγειρεύουν 15 λεπτά καθημερινά.",
+      f4Title: "Repetition control",
+      f4Body: "Πες αν θες variety κάθε μέρα ή batch cooking. Η μηχανή σέβεται την παραμετρο.",
+      flowEye: "Workflow",
+      flowTitle: "Από input σε approved plan",
+      step1: "Επιλέγεις πελάτη — οι περιορισμοί φορτώνονται αυτόματα",
+      step2: "Καθορίζεις θερμίδες, macros, ημέρες",
+      step3: "AI παράγει — βλέπεις pre-view με όλα τα macros",
+      step4: "Editing όπου θες, swap συνταγών, fine-tune ποσότητες",
+      step5: "Save ως template ή assign απευθείας στον πελάτη",
+      creditsEye: "AI Credits",
+      creditsTitle: "Πλήρης διαφάνεια",
+      creditsBody: "Κάθε παραγωγή πλάνου ξοδεύει 1 credit. Όλα τα πλάνα περιλαμβάνουν μηνιαία credits, και πάντα μπορείς να αγοράσεις packs επιπλέον (50/150/400). Καμιά \"μυστηριώδη\" χρέωση.",
+    }
+  : {
+      eyebrow: "AI Meal Plan Generator",
+      title: "From zero to a week's plan — in 2 seconds.",
+      sub: "Nutriq's AI is not a chatbot. It's a generation engine that respects nutrition science rules, your client's preferences, and your final judgment.",
+      cta1: "Try it free",
+      cta2: "See it live",
+      section1Eye: "How it works",
+      section1Title: "No hallucinated meals. Real recipes, real macros.",
+      section1Body: "Give the AI a target: \"1850 kcal, 35% protein, no dairy, prep time ≤ 25 min\". The engine searches your library (not the web), picks recipes that fit, calculates macros + micros precisely. If it can't find a combination within ±20% of your rules, it asks for constraint relaxation instead of hallucinating.",
+      featuresEye: "Capabilities",
+      featuresTitle: "Control on every axis",
+      f1Title: "Calorie & macro targets",
+      f1Body: "Set what you target. Protein/carbs/fats as percentages. Tolerance within 20%.",
+      f2Title: "Exclusions & allergies",
+      f2Body: "Auto-excludes ingredients the client has flagged. Also entire food groups (dairy, nuts).",
+      f3Title: "Prep time",
+      f3Body: "Set min/max prep. Ideal for clients who cook 15 minutes a day.",
+      f4Title: "Repetition control",
+      f4Body: "Tell it if you want variety each day or batch cooking. The engine respects it.",
+      flowEye: "Workflow",
+      flowTitle: "From input to approved plan",
+      step1: "Pick a client — their constraints auto-load",
+      step2: "Set calories, macros, days",
+      step3: "AI generates — you see pre-view with all macros",
+      step4: "Edit where you want, swap recipes, fine-tune quantities",
+      step5: "Save as template or assign directly to client",
+      creditsEye: "AI Credits",
+      creditsTitle: "Full transparency",
+      creditsBody: "Each generation uses 1 credit. All plans include monthly credits, and you can always buy extra packs (50/150/400). No mystery charges.",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "AI Παραγωγή Πλάνων — Nutriq" : "AI Meal Plan Generator — Nutriq"}
+  description={copy.sub}
+>
+  <!-- Hero -->
+  <section class="relative pt-20 md:pt-24 pb-16 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-aurora opacity-80" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30" aria-hidden="true"></div>
+
+    <div class="container-x">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 px-4 py-1.5 shadow-xs">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z" fill="#F49862"/>
+            </svg>
+            <span class="text-[12px] font-semibold tracking-[0.04em] uppercase text-gray-700">{copy.eyebrow}</span>
+          </div>
+          <h1 class="mt-6 text-display-lg text-ink text-balance">
+            {copy.title}
+          </h1>
+          <p class="mt-7 text-[18px] leading-[1.55] text-gray-600 text-pretty max-w-xl">
+            {copy.sub}
+          </p>
+          <div class="mt-10 flex flex-wrap items-center gap-3">
+            <a href={localizePath("pricing", lang)} class="btn-primary">
+              {copy.cta1}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+            <a href={localizePath("contact", lang)} class="btn-ghost">{copy.cta2}</a>
+          </div>
+        </div>
+
+        <!-- Animated generator visualization -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-3xl bg-cream-50 p-6 shadow-figure border border-ink/8">
+            <!-- Input panel -->
+            <div class="rounded-2xl bg-cream-100 p-5 border border-ink/8">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-brand-700">Input</p>
+              <div class="mt-3 space-y-2">
+                <div class="flex items-center justify-between text-[13px]">
+                  <span class="text-ink/60">{lang === "el" ? "Θερμίδες" : "Calories"}</span>
+                  <span class="font-medium text-ink tabular-nums">1850 kcal</span>
+                </div>
+                <div class="flex items-center justify-between text-[13px]">
+                  <span class="text-ink/60">{lang === "el" ? "Πρωτεΐνη" : "Protein"}</span>
+                  <span class="font-medium text-ink tabular-nums">35%</span>
+                </div>
+                <div class="flex items-center justify-between text-[13px]">
+                  <span class="text-ink/60">{lang === "el" ? "Χρόνος μαγ." : "Prep time"}</span>
+                  <span class="font-medium text-ink">≤ 25 min</span>
+                </div>
+                <div class="flex items-center justify-between text-[13px]">
+                  <span class="text-ink/60">{lang === "el" ? "Εξαιρέσεις" : "Excludes"}</span>
+                  <span class="font-medium text-ink">{lang === "el" ? "Γαλακτοκομικά" : "Dairy"}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Animated arrow -->
+            <div class="flex justify-center my-3">
+              <div class="relative">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" class="text-brand-700 animate-pulse">
+                  <path d="M16 6v20M9 19l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Output panel -->
+            <div class="rounded-2xl bg-brand-900 text-cream-50 p-5">
+              <div class="flex items-center justify-between">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-peach-300">Output</p>
+                <span class="text-[11px] text-cream-200/70">2.1s</span>
+              </div>
+              <div class="mt-3 space-y-2.5">
+                {[
+                  { name: lang === "el" ? "Βρώμη με μπλούμπερις" : "Oats & blueberries", k: 320 },
+                  { name: lang === "el" ? "Καρύδια & μήλο" : "Walnuts & apple", k: 210 },
+                  { name: lang === "el" ? "Κινόα-σολομός" : "Quinoa salmon", k: 540 },
+                  { name: lang === "el" ? "Smoothie πρωτεΐνης" : "Protein smoothie", k: 180 },
+                  { name: lang === "el" ? "Κοτόπουλο-γλυκοπατάτα" : "Chicken & sweet potato", k: 600 },
+                ].map((meal) => (
+                  <div class="flex items-center justify-between text-[13px]">
+                    <span class="text-cream-100/90 truncate">{meal.name}</span>
+                    <span class="font-medium tabular-nums text-cream-50">{meal.k} <span class="text-cream-300/60 text-[10px]">kcal</span></span>
+                  </div>
+                ))}
+              </div>
+              <div class="mt-3 pt-3 border-t border-cream-50/10 flex items-center justify-between text-[12px]">
+                <span class="text-cream-200/70">Total</span>
+                <span class="font-medium text-peach-300 tabular-nums">1,850 / 1,850 kcal · 100%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works section -->
+  <section class="section">
+    <div class="container-x">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5">
+          <p class="overline">{copy.section1Eye}</p>
+          <h2 class="mt-5 font-display text-display-md text-ink text-balance">{copy.section1Title}</h2>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7">
+          <p class="text-[18px] leading-[1.6] text-ink/75 text-pretty">{copy.section1Body}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features grid -->
+  <section class="section bg-cream-200/40">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="overline">{copy.featuresEye}</p>
+        <h2 class="mt-5 font-display text-display-md text-ink text-balance">{copy.featuresTitle}</h2>
+      </div>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+        {[
+          { title: copy.f1Title, body: copy.f1Body },
+          { title: copy.f2Title, body: copy.f2Body },
+          { title: copy.f3Title, body: copy.f3Body },
+          { title: copy.f4Title, body: copy.f4Body },
+        ].map((f, i) => (
+          <div class="rounded-2xl bg-cream-50 p-7 border border-ink/8 shadow-card">
+            <span class="font-display text-3xl text-brand-700/60">0{i + 1}</span>
+            <h3 class="mt-4 font-display text-2xl text-ink">{f.title}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-ink/65">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflow steps -->
+  <section class="section">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="overline">{copy.flowEye}</p>
+        <h2 class="mt-5 font-display text-display-md text-ink text-balance">{copy.flowTitle}</h2>
+      </div>
+      <ol class="mt-14 space-y-4">
+        {[copy.step1, copy.step2, copy.step3, copy.step4, copy.step5].map((step, i) => (
+          <li class="flex items-start gap-5 rounded-2xl bg-cream-50 p-6 border border-ink/8">
+            <span class="flex-shrink-0 h-12 w-12 rounded-full bg-brand-900 text-cream-50 flex items-center justify-center font-display text-xl">{i + 1}</span>
+            <p class="text-[17px] leading-relaxed text-ink pt-2">{step}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Credits explainer -->
+  <section class="section bg-cream-200/40">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="overline">{copy.creditsEye}</p>
+        <h2 class="mt-5 font-display text-display-md text-ink text-balance">{copy.creditsTitle}</h2>
+        <p class="mt-6 text-[18px] leading-[1.6] text-ink/70 text-pretty">{copy.creditsBody}</p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+</BaseLayout>

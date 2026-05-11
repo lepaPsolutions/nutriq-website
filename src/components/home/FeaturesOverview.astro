@@ -1,0 +1,274 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Top 4 features with deep alternating layout
+const deepFeatures = [
+  {
+    eyebrow: lang === "el" ? "AI που σέβεται την κρίση σου" : "AI that respects your judgment",
+    title: t("features.ai-gen.title"),
+    desc: t("features.ai-gen.desc"),
+    bullets: lang === "el"
+      ? ["Στόχοι θερμίδων & macros", "Εξαιρέσεις αλλεργιών", "Έλεγχος prep time", "1 credit / generation"]
+      : ["Calorie & macro targets", "Allergy exclusions", "Prep time control", "1 credit / generation"],
+    href: localizePath("features/ai-generator", lang),
+    visual: "ai-generator",
+  },
+  {
+    eyebrow: lang === "el" ? "Πελάτες ενεργοί, χωρίς PDF chasing" : "Active clients, no PDF chasing",
+    title: t("features.client-portal.title"),
+    desc: t("features.client-portal.desc"),
+    bullets: lang === "el"
+      ? ["Web app (iOS + Android)", "Step-by-step συνταγές", "Έξυπνη λίστα supermarket", "Push notifications"]
+      : ["PWA (iOS + Android)", "Step-by-step recipes", "Smart supermarket list", "Push notifications"],
+    href: localizePath("features/client-portal", lang),
+    visual: "client-portal",
+  },
+  {
+    eyebrow: lang === "el" ? "Από macros σε microbes" : "From macros to microbes",
+    title: t("features.nutrition.title"),
+    desc: t("features.nutrition.desc"),
+    bullets: lang === "el"
+      ? ["Βιταμίνες A-K, μέταλλα", "Ανθρωπομετρικά + BMI", "Σύσταση σώματος", "Βιοχημικά τεστ"]
+      : ["Vitamins A-K, minerals", "Anthropometrics + BMI", "Body composition", "Biochemical tests"],
+    href: localizePath("features/nutrition", lang),
+    visual: "nutrition",
+  },
+];
+
+const shortFeatures = [
+  { title: t("features.food-db.title"), desc: t("features.food-db.desc"), href: localizePath("features/food-database", lang) },
+  { title: t("features.grocery.title"), desc: t("features.grocery.desc"), href: localizePath("features/meal-planning", lang) },
+  { title: t("features.team.title"), desc: t("features.team.desc"), href: localizePath("features/teams", lang) },
+];
+---
+
+<section class="section bg-white">
+  <div class="container-x">
+    <!-- Section heading -->
+    <div class="max-w-3xl">
+      <p class="overline">{t("features.eyebrow")}</p>
+      <h2 class="mt-5 text-display-lg text-ink text-balance">
+        {t("features.title")}
+      </h2>
+      <p class="mt-5 text-[18px] leading-[1.55] text-gray-600 max-w-2xl text-pretty">
+        {t("features.subtitle")}
+      </p>
+    </div>
+
+    <!-- Alternating deep features -->
+    <div class="mt-20 space-y-24 md:space-y-32">
+      {deepFeatures.map((feature, i) => {
+        const reverse = i % 2 === 1;
+        return (
+          <div class={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${reverse ? "lg:[&>*:first-child]:order-2" : ""}`}>
+            <!-- Visual -->
+            <div class="lg:col-span-6">
+              {feature.visual === "ai-generator" && (
+                <div class="relative rounded-2xl bg-gradient-to-br from-cream-100 to-cream-200 p-6 md:p-8 border border-gray-200">
+                  <!-- Input → Output card -->
+                  <div class="bg-white rounded-xl border border-gray-200 shadow-card p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                      <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">Generate plan</span>
+                      <span class="inline-flex items-center gap-1 rounded-full bg-peach-50 border border-peach-200 px-2 py-0.5 text-[10px] font-semibold text-peach-700">
+                        <svg width="9" height="9" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z"/></svg>
+                        AI
+                      </span>
+                    </div>
+                    <div class="mt-3 space-y-2 text-[12px]">
+                      <div class="flex items-center justify-between"><span class="text-gray-500">{lang === "el" ? "Θερμίδες" : "Calories"}</span><span class="font-semibold text-ink tabular-nums">1850 kcal</span></div>
+                      <div class="flex items-center justify-between"><span class="text-gray-500">{lang === "el" ? "Πρωτεΐνη" : "Protein"}</span><span class="font-semibold text-ink tabular-nums">35%</span></div>
+                      <div class="flex items-center justify-between"><span class="text-gray-500">{lang === "el" ? "Χρόνος μαγ." : "Prep time"}</span><span class="font-semibold text-ink">≤ 25 min</span></div>
+                      <div class="flex items-center justify-between"><span class="text-gray-500">{lang === "el" ? "Εξαιρέσεις" : "Excludes"}</span><span class="font-semibold text-ink">{lang === "el" ? "Γαλακτοκομικά" : "Dairy"}</span></div>
+                    </div>
+                  </div>
+                  <!-- Arrow -->
+                  <div class="flex items-center justify-center my-3 gap-2">
+                    <div class="h-px flex-1 bg-gradient-to-r from-transparent to-brand-300"></div>
+                    <div class="rounded-full bg-brand-500 text-white p-1.5">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8m0 0L7 3m3 3L7 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="h-px flex-1 bg-gradient-to-l from-transparent to-brand-300"></div>
+                  </div>
+                  <div class="bg-brand-900 text-white rounded-xl p-4 shadow-figure">
+                    <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                      <span class="text-[10px] font-semibold uppercase tracking-wider text-peach-300">Result · 2.1s</span>
+                      <span class="text-[10px] text-white/60 tabular-nums">100% on target</span>
+                    </div>
+                    <div class="mt-3 space-y-2 text-[12px]">
+                      {[
+                        { n: lang === "el" ? "Βρώμη μπλούμπερις" : "Oats blueberries", k: 320 },
+                        { n: lang === "el" ? "Γιαούρτι" : "Yogurt", k: 180 },
+                        { n: lang === "el" ? "Κινόα σολομός" : "Quinoa salmon", k: 540 },
+                        { n: lang === "el" ? "Καρύδια μήλο" : "Walnuts apple", k: 210 },
+                        { n: lang === "el" ? "Κοτόπουλο γλυκοπατάτα" : "Chicken sweet potato", k: 600 },
+                      ].map((m) => (
+                        <div class="flex items-center justify-between">
+                          <span class="text-white/85 truncate">{m.n}</span>
+                          <span class="font-semibold tabular-nums">{m.k} <span class="text-white/40 text-[9px]">kcal</span></span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {feature.visual === "client-portal" && (
+                <div class="relative rounded-2xl bg-gradient-to-br from-brand-50 to-cream-100 p-6 md:p-10 border border-gray-200 flex items-center justify-center min-h-[440px]">
+                  <!-- Phone mockup -->
+                  <div class="relative w-[260px]">
+                    <div class="rounded-[36px] bg-ink p-2.5 shadow-figure">
+                      <div class="rounded-[28px] bg-white p-4 overflow-hidden h-[480px]">
+                        <div class="text-center pb-3 border-b border-gray-100">
+                          <p class="text-[10px] text-gray-400 font-medium">9:41</p>
+                        </div>
+                        <div class="mt-4">
+                          <p class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">{lang === "el" ? "Σήμερα" : "Today"}</p>
+                          <h3 class="mt-1 text-[20px] font-bold tracking-[-0.02em] text-ink">{lang === "el" ? "Γεια σου, Μαρία" : "Hi, Maria"}</h3>
+                          <p class="mt-0.5 text-[11px] text-gray-500">1850 kcal · 5 {lang === "el" ? "γεύματα" : "meals"}</p>
+                        </div>
+                        <div class="mt-4 space-y-1.5">
+                          {[
+                            { time: lang === "el" ? "Πρωινό" : "Breakfast", t: "08:00", done: true },
+                            { time: lang === "el" ? "Δεκατιανό" : "Snack", t: "11:00", done: true },
+                            { time: lang === "el" ? "Μεσημεριανό" : "Lunch", t: "14:00", done: false },
+                            { time: lang === "el" ? "Απογευματινό" : "Snack", t: "17:00", done: false },
+                            { time: lang === "el" ? "Βραδινό" : "Dinner", t: "20:00", done: false },
+                          ].map((m) => (
+                            <div class={`flex items-center gap-2 rounded-lg p-2 ${m.done ? "bg-gray-50 opacity-60" : "bg-brand-50/40 border border-brand-100/50"}`}>
+                              <div class={`h-4 w-4 rounded-full flex items-center justify-center flex-shrink-0 ${m.done ? "bg-brand-500" : "border-2 border-gray-300"}`}>
+                                {m.done && <svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+                              </div>
+                              <div class="flex-1">
+                                <p class={`text-[11px] font-semibold ${m.done ? "line-through text-gray-400" : "text-ink"}`}>{m.time}</p>
+                                <p class="text-[9px] text-gray-400">{m.t}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="absolute top-2.5 left-1/2 -translate-x-1/2 h-4 w-20 rounded-b-2xl bg-ink"></div>
+                  </div>
+                </div>
+              )}
+
+              {feature.visual === "nutrition" && (
+                <div class="relative rounded-2xl bg-gradient-to-br from-peach-50 to-cream-100 p-6 md:p-8 border border-gray-200">
+                  <div class="grid grid-cols-2 gap-3">
+                    <!-- Macro ring -->
+                    <div class="col-span-2 bg-white rounded-xl border border-gray-200 p-4">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-semibold uppercase tracking-wider text-brand-700">Macros · day</span>
+                        <span class="text-[10px] text-gray-500 tabular-nums">1850 kcal</span>
+                      </div>
+                      <div class="mt-4 flex items-center gap-4">
+                        <!-- Ring chart -->
+                        <svg viewBox="0 0 80 80" class="w-20 h-20">
+                          <circle cx="40" cy="40" r="32" fill="none" stroke="#F2F4F7" stroke-width="8"/>
+                          <circle cx="40" cy="40" r="32" fill="none" stroke="#0AA6A9" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="70" transform="rotate(-90 40 40)" stroke-linecap="round"/>
+                          <circle cx="40" cy="40" r="32" fill="none" stroke="#F7AE7E" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="135" transform="rotate(45 40 40)" stroke-linecap="round" opacity="0.8"/>
+                        </svg>
+                        <div class="space-y-1.5 flex-1">
+                          <div class="flex items-center justify-between text-[12px]"><span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-brand-500"></span><span class="text-gray-600">Protein</span></span><span class="font-semibold text-ink tabular-nums">35%</span></div>
+                          <div class="flex items-center justify-between text-[12px]"><span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-peach-400"></span><span class="text-gray-600">Carbs</span></span><span class="font-semibold text-ink tabular-nums">40%</span></div>
+                          <div class="flex items-center justify-between text-[12px]"><span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-gray-300"></span><span class="text-gray-600">Fats</span></span><span class="font-semibold text-ink tabular-nums">25%</span></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Vitamins -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-3">
+                      <span class="text-[10px] font-semibold uppercase tracking-wider text-gray-500">Vitamins</span>
+                      <div class="mt-2 grid grid-cols-3 gap-1 text-[10px] tabular-nums">
+                        {[
+                          { l: "A", v: 92 },
+                          { l: "B12", v: 100 },
+                          { l: "C", v: 85 },
+                          { l: "D", v: 65 },
+                          { l: "E", v: 110 },
+                          { l: "K", v: 78 },
+                        ].map((v) => (
+                          <div class="text-center">
+                            <div class="rounded-md bg-brand-50 border border-brand-100 px-1 py-1 font-bold text-brand-700">{v.l}</div>
+                            <p class="mt-0.5 text-gray-400">{v.v}%</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <!-- Body comp -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-3">
+                      <span class="text-[10px] font-semibold uppercase tracking-wider text-gray-500">Body</span>
+                      <div class="mt-2 space-y-1.5">
+                        <div>
+                          <div class="flex items-center justify-between text-[10px]"><span class="text-gray-500">Fat</span><span class="font-semibold tabular-nums text-ink">27%</span></div>
+                          <div class="mt-0.5 h-1 bg-gray-100 rounded-full overflow-hidden"><div class="h-full w-[27%] bg-peach-400 rounded-full"></div></div>
+                        </div>
+                        <div>
+                          <div class="flex items-center justify-between text-[10px]"><span class="text-gray-500">Muscle</span><span class="font-semibold tabular-nums text-ink">38%</span></div>
+                          <div class="mt-0.5 h-1 bg-gray-100 rounded-full overflow-hidden"><div class="h-full w-[38%] bg-brand-500 rounded-full"></div></div>
+                        </div>
+                        <div>
+                          <div class="flex items-center justify-between text-[10px]"><span class="text-gray-500">Water</span><span class="font-semibold tabular-nums text-ink">52%</span></div>
+                          <div class="mt-0.5 h-1 bg-gray-100 rounded-full overflow-hidden"><div class="h-full w-[52%] bg-brand-300 rounded-full"></div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Text -->
+            <div class="lg:col-span-6">
+              <p class="overline">{feature.eyebrow}</p>
+              <h3 class="mt-4 text-display-md text-ink text-balance">{feature.title}</h3>
+              <p class="mt-5 text-[17px] leading-[1.6] text-gray-600 text-pretty">{feature.desc}</p>
+              <ul class="mt-7 grid grid-cols-2 gap-3">
+                {feature.bullets.map((b) => (
+                  <li class="flex items-center gap-2 text-[14px] text-ink">
+                    <span class="h-5 w-5 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
+                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2 2 5-5" stroke="#0AA6A9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-8">
+                <a href={feature.href} class="inline-flex items-center gap-1.5 text-[14px] font-semibold text-brand-700 hover:text-brand-800 group">
+                  {t("common.learn-more")}
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="transition-transform group-hover:translate-x-0.5">
+                    <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Short features grid -->
+    <div class="mt-24 md:mt-32 pt-16 border-t border-gray-200">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {shortFeatures.map((f) => (
+          <a href={f.href} class="group card">
+            <h3 class="text-[18px] font-bold tracking-[-0.02em] text-ink">{f.title}</h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-gray-600">{f.desc}</p>
+            <span class="mt-5 inline-flex items-center gap-1 text-[13px] font-semibold text-brand-700 group-hover:gap-2 transition-all">
+              {t("common.learn-more")}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2.5l3.5 3.5L4 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-12 flex justify-center">
+        <a href={localizePath("features", lang)} class="btn-secondary">
+          {t("features.cta")}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

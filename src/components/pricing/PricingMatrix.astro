@@ -1,0 +1,422 @@
+---
+import { soloCorePlans, soloGrowthPlans, teamPlans, aiCreditPacks } from "../../i18n/pricing";
+import { getLangFromUrl, useTranslations, localizePath } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+function planCard(plan: typeof soloCorePlans[number], lang: "el" | "en") {
+  const priceAnnual = plan.annual;
+  const priceMonthly = plan.monthly;
+  return { plan, priceAnnual, priceMonthly, lang };
+}
+---
+
+<section class="pt-12 pb-8 relative">
+  <div class="container-x">
+    <!-- Annual / Monthly toggle -->
+    <div class="flex flex-col items-center gap-4">
+      <div
+        id="billing-toggle"
+        class="inline-flex items-center gap-1 rounded-full bg-cream-200 border border-ink/8 p-1.5"
+        role="tablist"
+        aria-label="Billing period"
+      >
+        <button
+          data-billing="annual"
+          class="billing-btn relative inline-flex items-center gap-2 rounded-full px-5 py-2 text-[14px] font-medium transition-all data-[active=true]:bg-brand-900 data-[active=true]:text-cream-50 data-[active=false]:text-ink/70 hover:data-[active=false]:text-ink"
+          data-active="true"
+          role="tab"
+        >
+          {t("pricing.toggle.annual")}
+          <span class="inline-flex items-center text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-peach-400/95 text-brand-900">
+            {t("pricing.toggle.save")}
+          </span>
+        </button>
+        <button
+          data-billing="monthly"
+          class="billing-btn rounded-full px-5 py-2 text-[14px] font-medium transition-all data-[active=true]:bg-brand-900 data-[active=true]:text-cream-50 data-[active=false]:text-ink/70 hover:data-[active=false]:text-ink"
+          data-active="false"
+          role="tab"
+        >
+          {t("pricing.toggle.monthly")}
+        </button>
+      </div>
+    </div>
+
+    <!-- Solo / Team segmentation -->
+    <div class="mt-10 flex justify-center">
+      <div
+        id="audience-toggle"
+        class="inline-flex items-center gap-1 rounded-full bg-cream-50 border border-ink/10 p-1.5 shadow-card"
+        role="tablist"
+        aria-label="Audience"
+      >
+        <button
+          data-audience="solo"
+          class="audience-btn rounded-full px-7 py-2.5 text-[15px] font-medium transition-all data-[active=true]:bg-ink data-[active=true]:text-cream-50 data-[active=false]:text-ink/70 hover:data-[active=false]:text-ink"
+          data-active="true"
+          role="tab"
+        >
+          <span class="inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M2 14c1-3 3-4 6-4s5 1 6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            {t("pricing.seg.solo")}
+          </span>
+        </button>
+        <button
+          data-audience="team"
+          class="audience-btn rounded-full px-7 py-2.5 text-[15px] font-medium transition-all data-[active=true]:bg-ink data-[active=true]:text-cream-50 data-[active=false]:text-ink/70 hover:data-[active=false]:text-ink"
+          data-active="false"
+          role="tab"
+        >
+          <span class="inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="11" cy="6" r="2" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M1 13c.7-2.3 2.4-3.5 5-3.5s4.3 1.2 5 3.5M9.5 11c.5-1.3 1.8-2 3.5-2s3 .7 3.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            {t("pricing.seg.team")}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Solo Core/Growth sub-toggle (only visible when Solo selected) -->
+    <div
+      id="solo-subtoggle"
+      class="mt-6 flex justify-center"
+    >
+      <div class="inline-flex items-center gap-1 rounded-full bg-cream-200/70 p-1" role="tablist" aria-label="Solo variant">
+        <button
+          data-variant="core"
+          class="variant-btn rounded-full px-5 py-2 text-[13px] font-medium transition-all data-[active=true]:bg-cream-50 data-[active=true]:shadow-card data-[active=true]:text-brand-800 data-[active=false]:text-ink/60 hover:data-[active=false]:text-ink"
+          data-active="true"
+          role="tab"
+        >
+          {t("pricing.sub.core")}
+          <span class="ml-1.5 text-[11px] text-ink/45 hidden md:inline">— {t("pricing.sub.core-desc")}</span>
+        </button>
+        <button
+          data-variant="growth"
+          class="variant-btn rounded-full px-5 py-2 text-[13px] font-medium transition-all data-[active=true]:bg-cream-50 data-[active=true]:shadow-card data-[active=true]:text-brand-800 data-[active=false]:text-ink/60 hover:data-[active=false]:text-ink"
+          data-active="false"
+          role="tab"
+        >
+          {t("pricing.sub.growth")}
+          <span class="ml-1.5 text-[11px] text-ink/45 hidden md:inline">— {t("pricing.sub.growth-desc")}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Plan cards -->
+<section class="pb-16 relative">
+  <div class="container-x">
+    <!-- Solo Core grid -->
+    <div data-grid="solo-core" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {soloCorePlans.map((plan) => (
+        <article class={`relative rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
+          plan.popular
+            ? "bg-brand-900 text-cream-50 shadow-figure ring-1 ring-brand-700"
+            : "bg-cream-50 border border-ink/8 shadow-card"
+        }`}>
+          {plan.popular && (
+            <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+              {t("pricing.popular")}
+            </span>
+          )}
+          <h3 class={`text-[13px] font-medium tracking-wider uppercase ${plan.popular ? "text-peach-300" : "text-brand-700"}`}>
+            {plan.name[lang]}
+          </h3>
+          <div class="mt-4 flex items-baseline gap-1.5">
+            <span class={`font-display text-5xl tracking-tight ${plan.popular ? "text-cream-50" : "text-ink"}`}>
+              <span data-price-annual={plan.annual ?? ""}>{plan.annual}€</span>
+              <span data-price-monthly={plan.monthly ?? ""} class="hidden">{plan.monthly}€</span>
+            </span>
+            <span class={`text-[14px] ${plan.popular ? "text-cream-200/70" : "text-ink/55"}`}>{t("pricing.month")}</span>
+          </div>
+          <p class={`mt-1 text-[12px] ${plan.popular ? "text-cream-200/65" : "text-ink/50"}`}>
+            <span data-period="annual">{t("pricing.billed-annually")}</span>
+            <span data-period="monthly" class="hidden">{t("pricing.billed-monthly")}</span>
+          </p>
+
+          <a
+            href={localizePath("contact", lang)}
+            class={`mt-7 flex w-full justify-center rounded-full px-5 py-3 text-[14px] font-medium transition-all ${
+              plan.popular
+                ? "bg-cream-50 text-ink hover:bg-cream-100"
+                : "bg-brand-900 text-cream-50 hover:bg-brand-800"
+            }`}
+          >
+            {t("pricing.cta.start")}
+          </a>
+
+          <ul class={`mt-7 space-y-3 ${plan.popular ? "text-cream-100/85" : "text-ink/75"}`}>
+            {plan.features[lang].map((feat) => (
+              <li class="flex items-start gap-2.5 text-[14px] leading-snug">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class={`flex-shrink-0 mt-0.5 ${plan.popular ? "text-peach-300" : "text-brand-500"}`}>
+                  <path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <!-- Solo Growth grid -->
+    <div data-grid="solo-growth" class="hidden grid-cols-1 md:grid-cols-3 gap-5">
+      {soloGrowthPlans.map((plan) => (
+        <article class={`relative rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
+          plan.popular
+            ? "bg-brand-900 text-cream-50 shadow-figure ring-1 ring-brand-700"
+            : "bg-cream-50 border border-ink/8 shadow-card"
+        }`}>
+          {plan.popular && (
+            <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+              {t("pricing.popular")}
+            </span>
+          )}
+          <h3 class={`text-[13px] font-medium tracking-wider uppercase ${plan.popular ? "text-peach-300" : "text-brand-700"}`}>
+            {plan.name[lang]}
+          </h3>
+          <div class="mt-4 flex items-baseline gap-1.5">
+            <span class={`font-display text-5xl tracking-tight ${plan.popular ? "text-cream-50" : "text-ink"}`}>
+              <span data-price-annual={plan.annual ?? ""}>{plan.annual}€</span>
+              <span data-price-monthly={plan.monthly ?? ""} class="hidden">{plan.monthly}€</span>
+            </span>
+            <span class={`text-[14px] ${plan.popular ? "text-cream-200/70" : "text-ink/55"}`}>{t("pricing.month")}</span>
+          </div>
+          <p class={`mt-1 text-[12px] ${plan.popular ? "text-cream-200/65" : "text-ink/50"}`}>
+            <span data-period="annual">{t("pricing.billed-annually")}</span>
+            <span data-period="monthly" class="hidden">{t("pricing.billed-monthly")}</span>
+          </p>
+
+          <a
+            href={localizePath("contact", lang)}
+            class={`mt-7 flex w-full justify-center rounded-full px-5 py-3 text-[14px] font-medium transition-all ${
+              plan.popular
+                ? "bg-cream-50 text-ink hover:bg-cream-100"
+                : "bg-brand-900 text-cream-50 hover:bg-brand-800"
+            }`}
+          >
+            {t("pricing.cta.start")}
+          </a>
+
+          <ul class={`mt-7 space-y-3 ${plan.popular ? "text-cream-100/85" : "text-ink/75"}`}>
+            {plan.features[lang].map((feat) => (
+              <li class="flex items-start gap-2.5 text-[14px] leading-snug">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class={`flex-shrink-0 mt-0.5 ${plan.popular ? "text-peach-300" : "text-brand-500"}`}>
+                  <path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <!-- Team grid -->
+    <div data-grid="team" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {teamPlans.map((plan) => {
+        const showCustom = !plan.annual && !plan.monthly;
+        return (
+          <article class={`relative rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
+            plan.popular
+              ? "bg-brand-900 text-cream-50 shadow-figure ring-1 ring-brand-700"
+              : "bg-cream-50 border border-ink/8 shadow-card"
+          }`}>
+            {plan.popular && (
+              <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+                {t("pricing.popular")}
+              </span>
+            )}
+            <h3 class={`text-[13px] font-medium tracking-wider uppercase ${plan.popular ? "text-peach-300" : "text-brand-700"}`}>
+              {plan.name[lang]}
+            </h3>
+            <div class="mt-4 flex items-baseline gap-1.5 flex-wrap">
+              {showCustom ? (
+                <span class={`font-display text-3xl tracking-tight ${plan.popular ? "text-cream-50" : "text-ink"}`}>
+                  {plan.customPrice?.[lang]}
+                </span>
+              ) : plan.customPrice ? (
+                <span class={`font-display text-5xl tracking-tight ${plan.popular ? "text-cream-50" : "text-ink"}`}>
+                  {plan.customPrice[lang]}
+                </span>
+              ) : (
+                <>
+                  <span class={`font-display text-5xl tracking-tight ${plan.popular ? "text-cream-50" : "text-ink"}`}>
+                    <span data-price-annual={plan.annual ?? ""}>{plan.annual}€</span>
+                    <span data-price-monthly={plan.monthly ?? ""} class="hidden">{plan.monthly}€</span>
+                  </span>
+                  <span class={`text-[14px] ${plan.popular ? "text-cream-200/70" : "text-ink/55"}`}>{t("pricing.month")}</span>
+                </>
+              )}
+            </div>
+            {!showCustom && !plan.customPrice && (
+              <p class={`mt-1 text-[12px] ${plan.popular ? "text-cream-200/65" : "text-ink/50"}`}>
+                <span data-period="annual">{t("pricing.billed-annually")}</span>
+                <span data-period="monthly" class="hidden">{t("pricing.billed-monthly")}</span>
+              </p>
+            )}
+
+            <a
+              href={localizePath("contact", lang)}
+              class={`mt-7 flex w-full justify-center rounded-full px-5 py-3 text-[14px] font-medium transition-all ${
+                plan.popular
+                  ? "bg-cream-50 text-ink hover:bg-cream-100"
+                  : "bg-brand-900 text-cream-50 hover:bg-brand-800"
+              }`}
+            >
+              {plan.cta === "contact" ? t("pricing.cta.contact") : t("pricing.cta.start")}
+            </a>
+
+            <ul class={`mt-7 space-y-3 ${plan.popular ? "text-cream-100/85" : "text-ink/75"}`}>
+              {plan.features[lang].map((feat) => (
+                <li class="flex items-start gap-2.5 text-[14px] leading-snug">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class={`flex-shrink-0 mt-0.5 ${plan.popular ? "text-peach-300" : "text-brand-500"}`}>
+                    <path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<!-- AI Credits add-on section -->
+<section class="section bg-cream-200/40">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="overline">AI Credits</p>
+      <h2 class="mt-5 font-display text-display-md text-ink text-balance">
+        {t("pricing.credits.title")}
+      </h2>
+      <p class="mt-5 text-[17px] leading-relaxed text-ink/70 text-pretty max-w-2xl">
+        {t("pricing.credits.subtitle")}
+      </p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
+      {aiCreditPacks.map((pack, i) => (
+        <div class={`rounded-3xl p-7 md:p-8 transition-transform hover:-translate-y-1 duration-300 ${
+          i === 1 ? "bg-cream-50 border-2 border-peach-300 shadow-card" : "bg-cream-50 border border-ink/8 shadow-card"
+        }`}>
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-peach-100 text-peach-700 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M5 0l1.2 3.5L10 4.5l-3.8 1L5 9 3.8 5.5 0 4.5l3.8-1z"/></svg>
+              Credits
+            </span>
+            {i === 1 && (
+              <span class="text-[11px] font-medium text-brand-700">
+                {lang === "el" ? "Καλύτερη αξία" : "Best value"}
+              </span>
+            )}
+          </div>
+          <div class="mt-5 flex items-baseline gap-2">
+            <span class="font-display text-5xl tracking-tight text-ink">{pack.credits}</span>
+            <span class="text-[14px] text-ink/55">{lang === "el" ? "credits" : "credits"}</span>
+          </div>
+          <p class="mt-1 text-[14px] text-ink/55">
+            {lang === "el" ? "Μία αγορά, χωρίς συνδρομή" : "One-time purchase, no subscription"}
+          </p>
+          <div class="mt-6 pt-6 border-t border-ink/8 flex items-baseline justify-between">
+            <span class="font-display text-3xl text-brand-800 tracking-tight">{pack.price}€</span>
+            <a href={localizePath("contact", lang)} class="text-[14px] font-medium text-brand-700 hover:text-brand-800 inline-flex items-center gap-1">
+              {lang === "el" ? "Αγορά" : "Buy"}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2.5l3.5 3.5L4 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Interactive toggles
+  const billingBtns = document.querySelectorAll(".billing-btn");
+  const audienceBtns = document.querySelectorAll(".audience-btn");
+  const variantBtns = document.querySelectorAll(".variant-btn");
+  const grids = document.querySelectorAll("[data-grid]");
+  const soloSubtoggle = document.getElementById("solo-subtoggle");
+
+  let state = {
+    billing: "annual" as "annual" | "monthly",
+    audience: "solo" as "solo" | "team",
+    variant: "core" as "core" | "growth",
+  };
+
+  function render() {
+    // Show correct grid
+    grids.forEach((g) => {
+      const key = (g as HTMLElement).dataset.grid;
+      let show = false;
+      if (state.audience === "solo" && state.variant === "core" && key === "solo-core") show = true;
+      if (state.audience === "solo" && state.variant === "growth" && key === "solo-growth") show = true;
+      if (state.audience === "team" && key === "team") show = true;
+      if (show) {
+        g.classList.remove("hidden");
+        g.classList.add("grid");
+      } else {
+        g.classList.add("hidden");
+        g.classList.remove("grid");
+      }
+    });
+
+    // Solo subtoggle visibility
+    if (soloSubtoggle) {
+      soloSubtoggle.style.display = state.audience === "solo" ? "flex" : "none";
+    }
+
+    // Billing prices
+    document.querySelectorAll("[data-price-annual]").forEach((el) => {
+      (el as HTMLElement).classList.toggle("hidden", state.billing !== "annual");
+    });
+    document.querySelectorAll("[data-price-monthly]").forEach((el) => {
+      (el as HTMLElement).classList.toggle("hidden", state.billing !== "monthly");
+    });
+    document.querySelectorAll("[data-period='annual']").forEach((el) => {
+      (el as HTMLElement).classList.toggle("hidden", state.billing !== "annual");
+    });
+    document.querySelectorAll("[data-period='monthly']").forEach((el) => {
+      (el as HTMLElement).classList.toggle("hidden", state.billing !== "monthly");
+    });
+  }
+
+  billingBtns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state.billing = (btn as HTMLElement).dataset.billing as "annual" | "monthly";
+      billingBtns.forEach((b) => b.setAttribute("data-active", String((b as HTMLElement).dataset.billing === state.billing)));
+      render();
+    })
+  );
+
+  audienceBtns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state.audience = (btn as HTMLElement).dataset.audience as "solo" | "team";
+      audienceBtns.forEach((b) => b.setAttribute("data-active", String((b as HTMLElement).dataset.audience === state.audience)));
+      render();
+    })
+  );
+
+  variantBtns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state.variant = (btn as HTMLElement).dataset.variant as "core" | "growth";
+      variantBtns.forEach((b) => b.setAttribute("data-active", String((b as HTMLElement).dataset.variant === state.variant)));
+      render();
+    })
+  );
+
+  render();
+</script>

@@ -1,0 +1,97 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CookieBanner from "../components/CookieBanner.astro";
+import { getLangFromUrl, getAltLangPath } from "../i18n/utils";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  noindex?: boolean;
+  structuredData?: object;
+}
+
+const { title, description, ogImage = "/og-default.png", noindex = false, structuredData } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://nutriq.gr").toString();
+const altPath = getAltLangPath(Astro.url.pathname, lang);
+const altLang = lang === "el" ? "en" : "el";
+const altUrl = new URL(altPath, Astro.site ?? "https://nutriq.gr").toString();
+
+const fullTitle = title.includes("Nutriq") ? title : `${title} — Nutriq`;
+---
+
+<!doctype html>
+<html lang={lang === "el" ? "el-GR" : "en-US"} class="scroll-pt-20">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={altLang} href={altUrl} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={new URL("/", Astro.site ?? "https://nutriq.gr").toString()} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site ?? "https://nutriq.gr").toString()} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Nutriq" />
+    <meta property="og:locale" content={lang === "el" ? "el_GR" : "en_US"} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site ?? "https://nutriq.gr").toString()} />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/nutriq-mark.svg" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="color-scheme" content="light" />
+
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    <!-- Default Organization structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Nutriq",
+      legalName: "InHealion",
+      url: "https://nutriq.gr",
+      logo: "https://nutriq.gr/nutriq-logo.svg",
+      description: "Nutrition software for dietitians and clinics — AI meal plans, client portal, full nutritional analysis.",
+      address: { "@type": "PostalAddress", addressCountry: "GR" },
+      sameAs: ["https://twitter.com", "https://instagram.com", "https://linkedin.com"],
+    })} />
+
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[99] focus:bg-brand-900 focus:text-cream-50 focus:px-4 focus:py-2 focus:rounded-full">
+      {lang === "el" ? "Μετάβαση στο περιεχόμενο" : "Skip to content"}
+    </a>
+
+    <Header />
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+    <CookieBanner />
+  </body>
+</html>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PricingMatrix from "../../components/pricing/PricingMatrix.astro";
+import FAQ from "../../components/home/FAQ.astro";
+import FinalCTA from "../../components/home/FinalCTA.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title="Pricing — Nutriq"
+  description="Transparent pricing for dietitians. SOLO from €19/mo. TEAM from €119/mo. All plans include 14 days free."
+>
+  <section class="relative pt-20 md:pt-28 pb-4 overflow-hidden">
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div class="absolute top-0 right-1/4 h-[400px] w-[400px] rounded-full bg-peach-100/50 blur-[120px]"></div>
+      <div class="absolute top-20 left-0 h-[400px] w-[400px] rounded-full bg-brand-100/40 blur-[120px]"></div>
+    </div>
+    <div class="container-x text-center">
+      <p class="overline">{t("nav.pricing")}</p>
+      <h1 class="mt-5 font-display text-display-lg text-ink text-balance max-w-4xl mx-auto">
+        {t("pricing.title")}
+      </h1>
+      <p class="mt-6 max-w-xl mx-auto text-[18px] leading-[1.55] text-ink/70 text-pretty">
+        {t("pricing.subtitle")}
+      </p>
+    </div>
+  </section>
+
+  <PricingMatrix />
+  <FAQ />
+  <FinalCTA />
+</BaseLayout>

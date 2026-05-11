@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SimpleFeaturePage from "../../components/SimpleFeaturePage.astro";
+import FinalCTA from "../../components/home/FinalCTA.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const content = lang === "el"
+  ? {
+      eyebrow: "Πλάνα Διατροφής & Templates",
+      title: "Πλάνα που χτίζονται μία φορά. Επαναχρησιμοποιούνται για πάντα.",
+      sub: "Δημιούργησε reusable templates που εφαρμόζονται σε πολλούς πελάτες με ένα κλικ. 5 γεύματα ανά ημέρα, ευέλικτος προγραμματισμός, αυτόματη ανίχνευση συγκρούσεων.",
+      bullets: [
+        { title: "Templates που επαναχρησιμοποιείς", body: "Φτιάξε ένα πλάνο Μεσογειακής 1800kcal — χρησιμοποίησέ το σε 50 πελάτες με προσαρμογές." },
+        { title: "5 meal slots ανά μέρα", body: "Πρωινό, δεκατιανό, μεσημεριανό, απογευματινό, βραδινό — με συνταγές ή ελεύθερα τρόφιμα." },
+        { title: "Conflict detection", body: "Σύστημα ειδοποίησης όταν δύο πλάνα επικαλύπτονται σε ημερομηνίες για τον ίδιο πελάτη." },
+        { title: "Audit trail", body: "Βλέπεις ποιος διαιτολόγος έχει επεξεργαστεί κάθε πλάνο και πότε — κρίσιμο για team environments." },
+        { title: "Export σε PDF", body: "Customizable PDFs — short ή long version, με ή χωρίς macros visible." },
+        { title: "Email πελάτη", body: "Στείλε πλάνο απευθείας με ένα κλικ — ο πελάτης λαμβάνει professional email με logo σου." },
+      ],
+      closingHeading: "Templates που σου επιστρέφουν χρόνο.",
+      closingBody: "Οι περισσότεροι διαιτολόγοι έχουν 8-15 \"core\" πλάνα που εφαρμόζουν στο 80% της πελατείας. Με τα templates της Nutriq, αυτή η δουλειά γίνεται μια φορά.",
+    }
+  : {
+      eyebrow: "Meal Plans & Templates",
+      title: "Plans built once. Reused forever.",
+      sub: "Create reusable templates that apply to multiple clients with one click. 5 meals per day, flexible scheduling, automatic conflict detection.",
+      bullets: [
+        { title: "Reusable templates", body: "Build one 1800kcal Mediterranean plan — apply it to 50 clients with adjustments." },
+        { title: "5 meal slots per day", body: "Breakfast, snack, lunch, snack, dinner — with recipes or freeform foods." },
+        { title: "Conflict detection", body: "Auto-alert when two plans overlap on the same client. No more accidental double-assignment." },
+        { title: "Audit trail", body: "See which dietitian edited each plan and when — critical for team environments." },
+        { title: "PDF export", body: "Customizable PDFs — short or long version, with or without macros visible." },
+        { title: "Email to client", body: "Send plan with one click — client receives professional email with your branding." },
+      ],
+      closingHeading: "Templates that give you time back.",
+      closingBody: "Most dietitians have 8-15 \"core\" plans they apply to 80% of their caseload. With Nutriq templates, that work happens once.",
+    };
+---
+
+<BaseLayout
+  title={lang === "el" ? "Πλάνα Διατροφής — Nutriq" : "Meal Planning — Nutriq"}
+  description={content.sub}
+>
+  <SimpleFeaturePage {...content} />
+  <FinalCTA />
+</BaseLayout>

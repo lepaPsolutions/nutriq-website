@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/home/Hero.astro";
+import TrustStrip from "../../components/home/TrustStrip.astro";
+import Problem from "../../components/home/Problem.astro";
+import FeatureTabs from "../../components/FeatureTabs.astro";
+import HowItWorks from "../../components/home/HowItWorks.astro";
+import Testimonials from "../../components/home/Testimonials.astro";
+import PricingTeaser from "../../components/home/PricingTeaser.astro";
+import AboutSection from "../../components/home/AboutSection.astro";
+import FAQ from "../../components/home/FAQ.astro";
+import FinalCTA from "../../components/home/FinalCTA.astro";
+
+const title = "Nutriq — Nutrition software for dietitians";
+const description =
+  "Nutriq is the complete nutrition toolkit for dietitians. AI meal plan generation, client portal, full nutritional analysis, team management. Try it free.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <TrustStrip />
+  <Problem />
+  <FeatureTabs />
+  <HowItWorks />
+  <Testimonials />
+  <PricingTeaser />
+  <AboutSection />
+  <FAQ />
+  <FinalCTA />
+</BaseLayout>

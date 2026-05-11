@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LegalPage from "../../components/LegalPage.astro";
+
+const content = {
+  eyebrow: "Legal",
+  title: "Terms of Service",
+  lastUpdated: "Last updated: May 2026",
+  intro: "Welcome to Nutriq. By using our platform, you accept these terms. Please read them carefully.",
+  sections: [
+    { heading: "Acceptance of terms", body: "By creating a Nutriq account, you accept these Terms and our Privacy Policy. If you don't agree, don't use the service." },
+    { heading: "Account & access", body: "You are responsible for the security of your account and for all activity that occurs under it. You must notify us immediately of any breach. Don't share credentials." },
+    { heading: "Permitted use", body: "Nutriq is intended for professional use by dietitians/nutritionists and nutrition centers. You may not use the service for illegal or prohibited activities, develop a competing product, or maliciously exhaust resources." },
+    { heading: "Your client data", body: "You are the controller of data you enter for your own clients. We are the processor. You must have a legal basis for processing (client consent) and comply with GDPR/HIPAA per your jurisdiction." },
+    { heading: "Subscriptions & payments", body: "Subscriptions billed monthly or annually. 14-day free trial, no obligation. Cancel anytime from the dashboard. No refunds for already-paid periods." },
+    { heading: "AI Credits", body: "AI Credits are included in your subscription or purchased in packs. They don't expire during active subscription. Lost upon cancellation. Non-refundable." },
+    { heading: "Liability", body: "Nutriq is a support tool. We do NOT replace professional judgment. Responsibility for nutritional guidance given to clients remains solely yours. We are not liable for damages from nutrition decisions." },
+    { heading: "Cancellation & termination", body: "We may suspend an account for terms violation, non-payment, or malicious use. After cancellation, you have a 90-day grace period for data export." },
+    { heading: "Governing law", body: "These terms are governed by Greek law. Jurisdiction: Athens courts." },
+  ],
+};
+---
+
+<BaseLayout title="Terms of Service — Nutriq" description={content.intro}>
+  <LegalPage {...content} />
+</BaseLayout>
