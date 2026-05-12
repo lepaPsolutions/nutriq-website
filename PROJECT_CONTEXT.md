@@ -27,7 +27,7 @@ This site is **separate from the app** (`c:\NutriQ\inhealion-fe`, Next.js + AWS)
 - Backend, auth, billing (lives in `inhealion-backend` Spring Boot)
 - AI generation engine (lives in `nutriq-meal-plan-generator` Lambda)
 
----
+-----
 
 ## 2. Tech stack
 
