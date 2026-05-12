@@ -131,9 +131,9 @@ const headline2 = t("hero.title-2");
         </div>
 
         <!-- Dashboard body -->
-        <div class="grid grid-cols-12 min-h-[480px]">
+        <div class="grid grid-cols-12 min-h-[380px] md:min-h-[480px]">
           <!-- Sidebar -->
-          <aside class="col-span-3 md:col-span-2 bg-brand-900 text-white p-3 md:p-4 flex flex-col gap-1">
+          <aside class="hidden md:flex md:col-span-2 bg-brand-900 text-white p-3 md:p-4 flex-col gap-1">
             <div class="hidden md:flex items-center px-2 py-3">
               <img src="/nutriq-logo.svg" alt="" class="h-6 w-auto brightness-0 invert"/>
             </div>
@@ -166,7 +166,7 @@ const headline2 = t("hero.title-2");
           </aside>
 
           <!-- Main panel -->
-          <div class="col-span-6 md:col-span-7 p-5 md:p-6 border-r border-gray-100">
+          <div class="col-span-12 md:col-span-7 p-4 md:p-6 md:border-r border-gray-100">
             <!-- Client header -->
             <div class="flex items-center gap-3">
               <div class="h-11 w-11 rounded-full bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center text-white text-lg font-semibold">
@@ -183,7 +183,7 @@ const headline2 = t("hero.title-2");
             </div>
 
             <!-- Tabs -->
-            <div class="mt-5 flex items-center gap-4 border-b border-gray-100 -mx-1">
+            <div class="mt-5 flex items-center gap-3 md:gap-4 border-b border-gray-100 -mx-1 overflow-x-auto no-scrollbar">
               {[lang === "el" ? "Επισκόπηση" : "Overview", lang === "el" ? "Πλάνο" : "Plan", lang === "el" ? "Μετρήσεις" : "Metrics", lang === "el" ? "Σημειώσεις" : "Notes"].map((tab, i) => (
                 <button class={`px-1 pb-2 text-[12px] font-semibold border-b-2 ${i === 1 ? "text-brand-900 border-brand-900" : "text-gray-500 border-transparent"}`}>{tab}</button>
               ))}
@@ -195,22 +195,22 @@ const headline2 = t("hero.title-2");
                 <p class="text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-700">{lang === "el" ? "Εβδομάδα 12" : "Week 12"}</p>
                 <h3 class="mt-1 text-[16px] font-bold tracking-[-0.02em] text-ink">{lang === "el" ? "Μεσογειακή · 1850 kcal" : "Mediterranean · 1850 kcal"}</h3>
               </div>
-              <button class="inline-flex items-center gap-1.5 rounded-md bg-gradient-to-r from-peach-100 to-peach-50 border border-peach-300/60 px-3 py-1.5 text-[11px] font-semibold text-peach-700 hover:from-peach-200 hover:to-peach-100 transition-colors">
+              <button class="inline-flex items-center gap-1.5 rounded-md bg-gradient-to-r from-peach-100 to-peach-50 border border-peach-300/60 px-2.5 md:px-3 py-1.5 text-[11px] font-semibold text-peach-700 hover:from-peach-200 hover:to-peach-100 transition-colors flex-shrink-0">
                 <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
                   <path d="M8 1l1.7 4.6L14 7l-4.3 1.4L8 13l-1.7-4.6L2 7l4.3-1.4z" fill="currentColor"/>
                 </svg>
-                {lang === "el" ? "Παραγωγή με AI" : "Generate with AI"}
+                <span class="hidden md:inline">{lang === "el" ? "Παραγωγή με AI" : "Generate with AI"}</span>
               </button>
             </div>
 
             <!-- Meal rows with stagger reveal -->
             <div class="mt-4 space-y-2" id="meal-list">
               {[
-                { time: lang === "el" ? "Πρωινό · 08:00" : "Breakfast · 08:00", title: lang === "el" ? "Βρώμη με μπλούμπερις & καρύδια" : "Oats with blueberries & walnuts", kcal: 320, color: "from-peach-100 to-peach-200" },
-                { time: lang === "el" ? "Δεκατιανό · 11:00" : "Snack · 11:00", title: lang === "el" ? "Γιαούρτι ελληνικό 2%" : "Greek yogurt 2%", kcal: 180, color: "from-brand-50 to-brand-100" },
-                { time: lang === "el" ? "Μεσημεριανό · 14:00" : "Lunch · 14:00", title: lang === "el" ? "Bowl κινόα με σολομό & αβοκάντο" : "Quinoa bowl with salmon & avocado", kcal: 540, color: "from-cream-200 to-cream-300" },
-                { time: lang === "el" ? "Απογευματινό · 17:00" : "Snack · 17:00", title: lang === "el" ? "Καρύδια & μήλο" : "Walnuts & apple", kcal: 210, color: "from-peach-100 to-peach-200" },
-                { time: lang === "el" ? "Βραδινό · 20:00" : "Dinner · 20:00", title: lang === "el" ? "Ψητό κοτόπουλο με γλυκοπατάτα" : "Roast chicken with sweet potato", kcal: 600, color: "from-brand-100 to-brand-200" },
+                { time: lang === "el" ? "Πρωινό" : "Breakfast", title: lang === "el" ? "Βρώμη με μπλούμπερις & καρύδια" : "Oats with blueberries & walnuts", kcal: 320, color: "from-peach-100 to-peach-200" },
+                { time: lang === "el" ? "Δεκατιανό" : "Snack", title: lang === "el" ? "Γιαούρτι ελληνικό 2%" : "Greek yogurt 2%", kcal: 180, color: "from-brand-50 to-brand-100" },
+                { time: lang === "el" ? "Μεσημεριανό" : "Lunch", title: lang === "el" ? "Bowl κινόα με σολομό & αβοκάντο" : "Quinoa bowl with salmon & avocado", kcal: 540, color: "from-cream-200 to-cream-300" },
+                { time: lang === "el" ? "Απογευματινό" : "Snack", title: lang === "el" ? "Καρύδια & μήλο" : "Walnuts & apple", kcal: 210, color: "from-peach-100 to-peach-200" },
+                { time: lang === "el" ? "Βραδινό" : "Dinner", title: lang === "el" ? "Ψητό κοτόπουλο με γλυκοπατάτα" : "Roast chicken with sweet potato", kcal: 600, color: "from-brand-100 to-brand-200" },
               ].map((meal, i) => (
                 <div class="meal-row flex items-center gap-3 rounded-lg p-2.5 hover:bg-gray-50 transition-colors" style={`animation-delay: ${0.8 + i * 0.1}s`}>
                   <div class={`h-9 w-9 rounded-md bg-gradient-to-br ${meal.color} flex-shrink-0`}></div>
@@ -225,7 +225,7 @@ const headline2 = t("hero.title-2");
           </div>
 
           <!-- Right rail: live metrics -->
-          <aside class="col-span-3 p-5 md:p-6 bg-gray-50/40">
+          <aside class="hidden md:block md:col-span-3 p-5 md:p-6 bg-gray-50/40">
             <div class="flex items-center justify-between">
               <p class="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">{lang === "el" ? "Πρόοδος" : "Progress"}</p>
               <span class="text-[10px] text-brand-700 font-semibold inline-flex items-center gap-1">

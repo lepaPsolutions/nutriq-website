@@ -21,7 +21,7 @@ export const ui = {
     "about.eyebrow": "Σχετικά",
     "about.title": "Μια ομάδα μηχανικών. Μια ομάδα διαιτολόγων. Μία αποστολή.",
     "about.subtitle": "Η Nutriq γεννήθηκε το 2026 από τη συνεργασία software developers και διαιτολόγων. Όχι ως αφηρημένη ιδέα — ως απάντηση σε συγκεκριμένα προβλήματα που είδαμε στη διατροφική πρακτική.",
-    "about.story-1": "Οι διαιτολόγοι ξόδευαν 8+ ώρες την εβδομάδα σε χειροκίνητα meal plans. Έχαναν πελάτες λόγω αργής επικοινωνίας. Έβλεπαν τα δεδομένα τους σπασμένα ανάμεσα σε Excel, post-it, και τυπωμένα PDFs.",
+    "about.story-1": "Οι διαιτολόγοι ξόδευαν 30+ ώρες την εβδομάδα σε χειροκίνητα meal plans. Έχαναν πελάτες λόγω αργής επικοινωνίας. Έβλεπαν τα δεδομένα τους σπασμένα ανάμεσα σε Excel, post-it, και τυπωμένα PDFs.",
     "about.story-2": "Οι μηχανικοί είδαν ένα πρόβλημα που λυνόταν με το σωστό software. Οι διαιτολόγοι μας έδωσαν τις απαντήσεις. Φτιάξαμε τη Nutriq μαζί — όχι από μηδέν με υποθέσεις, αλλά από πραγματικές ανάγκες ανθρώπων που βλέπουν 50 πελάτες την εβδομάδα.",
     "about.values-eye": "Σε τι πιστεύουμε",
     "about.v1.t": "Επιστημονική ακρίβεια",
@@ -53,7 +53,7 @@ export const ui = {
     "problem.title": "Excel, post-it, τυπωμένα PDFs.",
     "problem.subtitle":
       "Η δουλειά του διαιτολόγου δε χωράει σε φύλλα Excel. Κάθε πελάτης έχει ξεχωριστές συνθήκες, στόχους, εργαστηριακά, προτιμήσεις. Όταν πρέπει να τα συντονίσεις όλα χειροκίνητα, η ώρα που μένει για τον ίδιο τον πελάτη συρρικνώνεται.",
-    "problem.stat-1-num": "8+ ώρες",
+    "problem.stat-1-num": "30+ ώρες",
     "problem.stat-1-label": "ανά εβδομάδα σε χειροκίνητο meal planning",
     "problem.stat-2-num": "~40%",
     "problem.stat-2-label": "των διαιτολόγων χάνει πελάτες λόγω αργής επικοινωνίας",
@@ -149,7 +149,7 @@ export const ui = {
     "footer.terms": "Όροι χρήσης",
     "footer.cookies": "Cookies",
     "footer.gdpr": "GDPR",
-    "footer.copyright": "© 2026 InHealion. Όλα τα δικαιώματα διατηρούνται.",
+    "footer.copyright": "© 2026 Nutriq. Όλα τα δικαιώματα διατηρούνται.",
 
     // Pricing page
     "pricing.title": "Επίλεξε το πλάνο σου.",
@@ -194,7 +194,7 @@ export const ui = {
     "about.eyebrow": "About",
     "about.title": "A team of engineers. A team of dietitians. One mission.",
     "about.subtitle": "Nutriq was born in 2026 from a partnership between software developers and dietitians. Not as an abstract idea — as an answer to specific problems we saw in nutrition practice.",
-    "about.story-1": "Dietitians were spending 8+ hours a week on manual meal plans. They were losing clients to slow communication. Their data was scattered across Excel files, sticky notes, and printed PDFs.",
+    "about.story-1": "Dietitians were spending 30+ hours a week on manual meal plans. They were losing clients to slow communication. Their data was scattered across Excel files, sticky notes, and printed PDFs.",
     "about.story-2": "The engineers saw a problem that the right software could solve. The dietitians gave us the answers. We built Nutriq together — not from scratch with assumptions, but from real needs of people seeing 50 clients a week.",
     "about.values-eye": "What we believe in",
     "about.v1.t": "Scientific accuracy",
@@ -226,7 +226,7 @@ export const ui = {
     "problem.title": "Excel, post-its, printed PDFs.",
     "problem.subtitle":
       "Dietetics doesn't fit in a spreadsheet. Each client has unique conditions, goals, lab results, preferences. When you have to orchestrate all of it by hand, the time left for the client themselves shrinks.",
-    "problem.stat-1-num": "8+ hrs",
+    "problem.stat-1-num": "30+ hrs",
     "problem.stat-1-label": "per week on manual meal planning",
     "problem.stat-2-num": "~40%",
     "problem.stat-2-label": "of dietitians lose clients to slow communication",
@@ -322,7 +322,7 @@ export const ui = {
     "footer.terms": "Terms of Service",
     "footer.cookies": "Cookies",
     "footer.gdpr": "GDPR",
-    "footer.copyright": "© 2026 InHealion. All rights reserved.",
+    "footer.copyright": "© 2026 Nutriq. All rights reserved.",
 
     // Pricing
     "pricing.title": "Choose your plan.",

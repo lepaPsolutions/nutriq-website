@@ -70,7 +70,7 @@ This site is **separate from the app** (`c:\NutriQ\inhealion-fe`, Next.js + AWS)
 
 | File | Use |
 |---|---|
-| `nutriq-logo.svg` | **Horizontal lockup** (heart + "nutriq" wordmark). Cropped viewBox `700 3900 8900 2600`. Used in Header (h-9) + Footer (h-11). No separate text needed. |
+| `nutriq-logo.svg` | **Horizontal lockup** (heart + "nutriq" wordmark + small "your nutrition guide" tagline). viewBox `700 3650 8900 2850` (tuned so heart leaf-tip at y≈3682 is not clipped). Used in Header (h-12) + Footer (h-11). No separate text needed. The leaf has a flat top by design. |
 | `nutriq-mark.svg` | **Mark only** (heart icon). Used in dashboard mockup sidebar, footer brand echo. |
 | `favicon.svg` | **Square favicon** (heart, tight viewBox `1200 1300 7400 7400`). Used for browser tab. |
 | `nutriq-logo-horizontal.svg` | Legacy alternative — not currently used. Can be removed if you want. |
@@ -100,8 +100,7 @@ This site is **separate from the app** (`c:\NutriQ\inhealion-fe`, Next.js + AWS)
 ```
 EL (default at root)              EN (mirrored at /en/)
 ─────────────────────             ──────────────────────
-/                                  /en/                       Home
-/features                          /en/features/              Features index (FeatureTabs)
+/                                  /en/                       Home (contains #features and #about sections)
 /features/ai-generator             /en/features/ai-generator
 /features/ai-assistant             /en/features/ai-assistant  ← Coming Soon + waitlist
 /features/client-portal            /en/features/client-portal
@@ -110,7 +109,6 @@ EL (default at root)              EN (mirrored at /en/)
 /features/food-database            /en/features/food-database
 /features/teams                    /en/features/teams
 /pricing                           /en/pricing
-/about                             /en/about
 /blog                              /en/blog                   ← Index only, no posts yet
 /contact                           /en/contact
 /privacy                           /en/privacy
@@ -119,31 +117,32 @@ EL (default at root)              EN (mirrored at /en/)
 /404                               (same file)
 ```
 
-**Total**: 33 pages built (16 unique × 2 langs + 404 + sitemap)
+**Total**: 29 pages built (14 unique × 2 langs + 404 + sitemap). The `/features` and `/about` **index pages were intentionally removed** — those concepts live as anchored sections on home (`/#features` from FeatureTabs, `/#about` from AboutSection). The 7 individual `/features/*` deep-dive pages remain.
 
 ### Home page sections (in order)
 
-1. **Hero** (`Hero.astro`) — Live ticker, headline with brush underline, big dashboard mockup with stagger animations, floating badges
+1. **Hero** (`Hero.astro`) — Live ticker, headline with brush underline, big dashboard mockup with stagger animations, floating badges. Dashboard sidebar is `hidden md:flex` (sidebar removed on mobile to give main panel full width). Dashboard URL chip reads `nutriq.gr/clients/maria` (not `app.nutriq.gr`).
 2. **TrustStrip** — Marquee of placeholder customer logos (REPLACE WHEN REAL ONES AVAILABLE)
-3. **Problem** — Stats section: 8+ hrs, 40%, 13 dietary patterns
-4. **FeatureTabs** (`FeatureTabs.astro`) — Interactive sticky list + content panel, all 7 features
+3. **Problem** — Stats section: 30+ hrs, ~40%, 13 dietary patterns
+4. **FeatureTabs** (`FeatureTabs.astro`, `id="features"`) — Interactive sticky list + content panel, all 7 features. On mobile, tab cards are compact (short description + arrow hidden via `hidden md:block`).
 5. **HowItWorks** — 3 steps with numbered markers
 6. **Testimonials** — 3 placeholder testimonials (REPLACE WHEN REAL)
 7. **PricingTeaser** (`id="pricing"`) — 3 sample tier cards + CTA to /pricing
-8. **AboutSection** (`id="about"`) — Founding story, dual-panel (Engineers + Dietitians), 4 values, CTA to /about
+8. **AboutSection** (`id="about"`) — Founding story, dual-panel (Engineers + Dietitians), 4 values. **No CTA** — the section is self-contained on home; there's no separate /about page to link to.
 9. **FAQ** — 6 questions, FAQPage structured data (JSON-LD for SEO)
 10. **FinalCTA** — Deep teal banner with "Start today"
 
 ### Nav
 
-5 items only (intentionally minimal):
+Items (intentionally minimal):
 - Features → `/#features` (anchor scroll)
 - Pricing → `/#pricing` (anchor scroll)
 - About → `/#about` (anchor scroll)
 - Blog → `/blog` (separate page — has multiple posts)
-- "Start free" CTA → `/pricing`
+- **Login** link → `https://nutriq.gr/authentication/login` (opens in new tab, `target="_blank"`)
+- **"Start free" / "Ξεκίνα δωρεάν"** CTA → `/pricing`
 
-**Smart anchor scroll**: clicking nav links on home = smooth scroll; from other pages = full navigate then anchor jump.
+**Smart anchor scroll**: clicking nav links on home = smooth scroll; from other pages = full navigate then anchor jump. Implemented via `data-nav-anchor` attribute on links (see `Header.astro` script).
 
 ---
 
@@ -180,25 +179,80 @@ The pricing structure is **3-axis** (complex). Source of truth: `src/i18n/pricin
 
 ---
 
-## 6. Important decisions & user preferences
+## 6. SEO
+
+The site is built **SEO-native** — static HTML, hreflang on every page, structured data, clean URLs. This section documents what's implemented and what's still missing, so the founder can answer "what are you doing for SEO?" in conversation.
+
+### What's implemented ✅
+
+| Layer | What | Where |
+|---|---|---|
+| **Static HTML** | Astro outputs pre-rendered HTML (no runtime rendering) — Google indexes instantly, zero JS-execution penalty | `astro.config.mjs` |
+| **Clean URLs** | `format: "directory"` → `/pricing/` not `/pricing.html` | `astro.config.mjs:21` |
+| **Sitemap** | Auto-generated at `dist/sitemap-index.xml` with i18n locales (el-GR, en-US) | `@astrojs/sitemap` config in `astro.config.mjs:9-14` |
+| **robots.txt** | Allows all crawlers, references sitemap | `public/robots.txt` |
+| **Per-page title + description** | Each page has its own `title` and `description` constants in frontmatter, passed to `<BaseLayout>`. Titles 48-60 chars (within Google's 60-char preview). Descriptions 150-160 chars (within 160-char preview). | `src/pages/**/*.astro` (each page) |
+| **Title pattern** | Auto-suffix " — Nutriq" unless title already contains it | `BaseLayout.astro:23` |
+| **Canonical URLs** | Emitted on every page; defaults to `nutriq.gr + Astro.url.pathname` | `BaseLayout.astro` |
+| **Hreflang** | `<link rel="alternate" hreflang="el">`, `hreflang="en"`, `hreflang="x-default"` on every page — prevents EL ↔ EN cannibalization | `BaseLayout.astro:37-39` |
+| **Open Graph** | `og:type`, `og:title`, `og:description`, `og:image`, `og:url`, `og:site_name`, `og:locale` (el_GR or en_US) | `BaseLayout.astro:42-48` |
+| **Twitter Cards** | `summary_large_image` with title/description/image | `BaseLayout.astro:51-54` |
+| **JSON-LD: Organization** | Global on every page — name "Nutriq", legalName "InHealion", URL, logo, description, addressCountry "GR", sameAs social links | `BaseLayout.astro:67-77` |
+| **JSON-LD: FAQPage** | 6 Q&A pairs from FAQ section → eligible for Google FAQ rich snippets | `src/components/home/FAQ.astro:15-23` |
+| **Lang attribute** | `<html lang="el-GR">` or `lang="en-US"` per locale | `BaseLayout.astro` |
+
+### Target keywords (natural, no stuffing)
+
+These are the words our copy is naturally rich in — observable in page titles, h1/h2 headings, body paragraphs. NOT in a `meta keywords` tag (Google ignores that since 2009).
+
+**Greek (primary)**:
+- "λογισμικό διατροφής", "διαιτολόγος", "AI πλάνα διατροφής", "πλάνα διατροφής"
+- "πελάτες", "ομάδα", "διατροφική ανάλυση", "Μεσογειακή διατροφή"
+- "GDPR", "EU hosting", "ελληνική βάση τροφίμων"
+
+**English (secondary)**:
+- "nutrition software", "dietitian", "AI meal plans", "meal planning software"
+- "client portal", "nutritional analysis", "team practice management"
+
+### Gaps to close before launch ⚠️
+
+| Gap | Impact | Priority |
+|---|---|---|
+| **Missing `/og-default.png`** | Social shares (LinkedIn, X, Slack) show no image. CTR loss. `BaseLayout.astro:11` references the file but it doesn't exist in `/public` | 🔴 HIGH — quick win, just generate a 1200×630px branded PNG |
+| **No blog content** | Blog index exists at `/blog`, but zero articles. Long-tail keyword search traffic = currently zero. This is the #1 SEO lever for SaaS. | 🔴 HIGH — content roadmap |
+| **No SoftwareApplication schema** | Google doesn't know we're SaaS, not a generic site. Missing potential for rich pricing snippets. | 🟠 MEDIUM — add to BaseLayout (could include offerCatalog with pricing) |
+| **No BreadcrumbList schema** | Deep-dive feature pages and legal pages don't show breadcrumbs in SERPs | 🟡 LOW — polish |
+| **No Review / AggregateRating schema** | Testimonials are plain HTML, can't surface star ratings | 🟡 LOW — meaningful only once we have real testimonials |
+| **Page-specific OG images** | All pages use the (missing) default. Pricing page could show tier cards, feature pages could show product visuals | 🟡 LOW — polish after default OG exists |
+| **Google Search Console + GA4** | Not connected yet; should happen post-deploy to start tracking impressions/clicks | 🔴 HIGH post-deploy — first thing after going live |
+
+### Founder pitch (ready-to-say, ~30 sec)
+
+> "Έχουμε χτίσει το site με Astro που βγάζει static HTML — η Google το αγαπάει γιατί φορτώνει αστραπιαία. Κάθε σελίδα έχει proper meta tags, OpenGraph για social previews, canonical URLs, και hreflang annotations έτσι ώστε οι ελληνικές και αγγλικές εκδόσεις να μη ανταγωνίζονται μεταξύ τους στα αποτελέσματα της Google. Έχουμε structured data για Organization και FAQ — οι ερωτο-απαντήσεις μας βγαίνουν σαν rich snippets. Αυτό που μένει είναι το blog content — θα τραβάει long-tail searches από διαιτολόγους που ψάχνουν λύσεις, και ταυτόχρονα θα χτίζει authority."
+
+---
+
+## 7. Important decisions & user preferences
 
 These were explicit user decisions during build. Honor them:
 
 | Decision | Reason |
 |---|---|
 | **Multi-page, NOT single-page** | Lots of content to show, but home is comprehensive |
-| **Home has full FeatureTabs** | Replaced earlier "FeaturesOverview" with interactive tabs |
-| **About section on home + /about page** | Both exist — home has the section, /about has deeper content |
+| **Home has full FeatureTabs** | Replaced earlier "FeaturesOverview" with interactive tabs. `FeaturesOverview.astro` is still in the repo but unused (no imports) — safe to delete |
+| **No /features or /about index pages** | Removed. Both concepts live as anchored sections on home. The 7 `/features/*` deep-dive sub-pages remain |
 | **No "For Solo" / "For Clinics" pages** | Removed as redundant. Solo is default. Team specifics shown via badges in FeatureTabs |
 | **Inter font, NOT Fraunces** | Modern SaaS aesthetic, professional Greek rendering |
 | **White-dominant, cream selective** | Not too sterile, not too warm. Strategic balance |
 | **brand-900 = #00494D** | NOT #003931. User clarified this is the canonical dark teal |
 | **Logo SVG has wordmark built in** | No separate "nutriq" text rendered next to logo in Header/Footer |
+| **Footer copyright says "Nutriq"** | NOT "InHealion" — user explicitly changed. Legal entity name "InHealion" survives only in JSON-LD `legalName` for Google/SEO. Privacy policy uses "Nutriq" too (no "InHealion (Nutriq, we)" wrapper) |
 | **Greek primary, English at /en/** | nutriq.gr is .gr domain, Greek SEO authority |
+| **Greek brand spelling is "Nutriq"** | Lowercase q. User uses this consistently. Not "NutriQ" |
 
 ---
 
-## 7. Key files & where things live
+## 8. Key files & where things live
 
 ```
 c:\NutriQ-marketing\
@@ -251,7 +305,7 @@ c:\NutriQ-marketing\
 
 ---
 
-## 8. Outstanding items / TODOs
+## 9. Outstanding items / TODOs
 
 ### 🟢 Content placeholders to replace with real
 
@@ -272,7 +326,7 @@ c:\NutriQ-marketing\
 ### 🔵 Pre-launch verification
 
 - [ ] **Hard refresh in browser to verify** — all pages render, no console errors
-- [ ] **Mobile responsive check** across all pages (built mobile-first but worth eyeballing)
+- [x] **Mobile responsive check** — first pass done (Hero, FeatureTabs, Pricing, FAQ, Footer). Hero dashboard mockup on mobile = main panel only (sidebar `hidden md:flex`)
 - [ ] **Lighthouse audit** — target 95+ on Performance/SEO/Accessibility
 - [ ] **Test all i18n switches** — every page has proper EN/EL toggle that works
 - [ ] **Test FeatureTabs interactivity** — clicking tabs swaps content correctly
@@ -280,9 +334,9 @@ c:\NutriQ-marketing\
 
 ### 🔴 Deploy prep
 
-- [ ] `git init` + first commit (NOT done yet — user wanted to do this themselves)
-- [ ] Push to GitHub/GitLab as new repo (separate from `inhealion-fe`)
-- [ ] Connect Vercel to repo
+- [x] `git init` + first commit — done
+- [x] Push to GitHub — done, pushed to `https://github.com/lepaPsolutions/nutriq-website` (private repo, user's GitHub identity is `iplex@digipath.gr` after credential clear-out — original cached creds were for a different account `joanplex` which caused initial 404 errors)
+- [ ] Connect Vercel to repo — **blocked**: Vercel GitHub App needs to be installed on the `lepaPsolutions` organization (returns "repo not found / empty" until then). User must approve the Vercel App for that org at https://github.com/apps/vercel/installations/select_target
 - [ ] Set `nutriq.gr` as custom domain in Vercel
 - [ ] DNS config (CNAME or A record to Vercel)
 - [ ] Verify SSL auto-provisioning
@@ -290,7 +344,7 @@ c:\NutriQ-marketing\
 
 ---
 
-## 9. Build & dev commands
+## 10. Build & dev commands
 
 ```powershell
 # From c:\NutriQ-marketing\
@@ -300,11 +354,11 @@ npm run build         # production build → dist/
 npm run preview       # serve the built site locally
 ```
 
-**Last verified**: build passes (33 pages, 6.4s, 0 errors, 0 warnings) on May 2026.
+**Last verified**: build passes (29 pages, ~4–6s, 0 errors) on May 2026.
 
 ---
 
-## 10. Continuation tips for new Claude session
+## 11. Continuation tips for new Claude session
 
 ### Before making changes
 1. Read this file
@@ -340,10 +394,13 @@ npm run preview       # serve the built site locally
 
 - ❌ Don't bring back Fraunces or any serif font
 - ❌ Don't add "For Solo" or "For Clinics" pages (user explicitly removed)
+- ❌ Don't recreate `/features` or `/about` index pages — those concepts live as anchors (`/#features`, `/#about`) on home; the 7 `/features/*` deep-dive pages stay
+- ❌ Don't restore the "Read more" CTA on AboutSection (it pointed to the removed /about page)
 - ❌ Don't make it a true single-page site (user wants multi-page architecture)
 - ❌ Don't add `font-display` CSS rules that change away from Inter
 - ❌ Don't put `#003931` in any palette (it's wrong)
-- ❌ Don't auto-init git or auto-push to remote — user wants to control this
+- ❌ Don't change footer copyright back to "InHealion" — user changed it to "Nutriq"
+- ❌ Don't auto-push to remote without user direction (initial push is done; future pushes should be proposed first)
 
 ### User communication style
 
@@ -355,7 +412,7 @@ npm run preview       # serve the built site locally
 
 ---
 
-## 11. Memory references (from auto-memory system)
+## 12. Memory references (from auto-memory system)
 
 These memories are loaded automatically in NutriQ-related sessions:
 

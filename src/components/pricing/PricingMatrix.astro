@@ -119,13 +119,13 @@ function planCard(plan: typeof soloCorePlans[number], lang: "el" | "en") {
     <!-- Solo Core grid -->
     <div data-grid="solo-core" class="grid grid-cols-1 md:grid-cols-3 gap-5">
       {soloCorePlans.map((plan) => (
-        <article class={`relative rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
+        <article class={`relative rounded-2xl md:rounded-3xl p-5 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
           plan.popular
             ? "bg-brand-900 text-cream-50 shadow-figure ring-1 ring-brand-700"
             : "bg-cream-50 border border-ink/8 shadow-card"
         }`}>
           {plan.popular && (
-            <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+            <span class="absolute -top-3 left-5 md:left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
               {t("pricing.popular")}
             </span>
           )}
@@ -172,13 +172,13 @@ function planCard(plan: typeof soloCorePlans[number], lang: "el" | "en") {
     <!-- Solo Growth grid -->
     <div data-grid="solo-growth" class="hidden grid-cols-1 md:grid-cols-3 gap-5">
       {soloGrowthPlans.map((plan) => (
-        <article class={`relative rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
+        <article class={`relative rounded-2xl md:rounded-3xl p-5 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
           plan.popular
             ? "bg-brand-900 text-cream-50 shadow-figure ring-1 ring-brand-700"
             : "bg-cream-50 border border-ink/8 shadow-card"
         }`}>
           {plan.popular && (
-            <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+            <span class="absolute -top-3 left-5 md:left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
               {t("pricing.popular")}
             </span>
           )}
@@ -227,13 +227,13 @@ function planCard(plan: typeof soloCorePlans[number], lang: "el" | "en") {
       {teamPlans.map((plan) => {
         const showCustom = !plan.annual && !plan.monthly;
         return (
-          <article class={`relative rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
+          <article class={`relative rounded-2xl md:rounded-3xl p-5 md:p-8 transition-all duration-300 hover:-translate-y-1 ${
             plan.popular
               ? "bg-brand-900 text-cream-50 shadow-figure ring-1 ring-brand-700"
               : "bg-cream-50 border border-ink/8 shadow-card"
           }`}>
             {plan.popular && (
-              <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
+              <span class="absolute -top-3 left-5 md:left-7 inline-flex items-center gap-1 rounded-full bg-peach-400 text-brand-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
                 {t("pricing.popular")}
               </span>
             )}
