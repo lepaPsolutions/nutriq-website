@@ -126,7 +126,7 @@ export const ui = {
       "Κάθε φορά που χρησιμοποιείς την AI για να παράξεις πλάνο, καταναλώνεται 1 credit. Όλα τα πλάνα περιλαμβάνουν μηνιαία credits, και μπορείς πάντα να αγοράσεις επιπλέον packs (50/150/400 credits).",
     "faq.q4": "Υπάρχει mobile app για τους πελάτες;",
     "faq.a4":
-      "Ναι. Οι πελάτες σου συνδέονται στην Πύλη Πελάτη από κινητό ή υπολογιστή και βλέπουν πλάνα, συνταγές, λίστες supermarket και πρόοδο. Η εφαρμογή είναι Progressive Web App — δουλεύει σε iOS, Android, χωρίς εγκατάσταση.",
+      "Ναι. Οι πελάτες σου κατεβάζουν την εφαρμογή Nutriq από το App Store (iOS) ή το Google Play (Android) και βλέπουν πλάνα, συνταγές, λίστες supermarket και πρόοδο. Διαθέσιμη και από browser για χρήση από υπολογιστή.",
     "faq.q5": "Μπορώ να ακυρώσω όποτε θέλω;",
     "faq.a5":
       "Φυσικά. Όλα τα πλάνα ακυρώνονται μέσα από το dashboard σου, χωρίς fee. Διατηρείς πρόσβαση μέχρι το τέλος της περιόδου που έχεις πληρώσει.",
@@ -299,7 +299,7 @@ export const ui = {
       "Every time you use AI to generate a plan, 1 credit is consumed. All plans include monthly credits, and you can always buy extra packs (50/150/400 credits) on demand.",
     "faq.q4": "Is there a mobile app for clients?",
     "faq.a4":
-      "Yes. Your clients log into the Client Portal from phone or desktop and see plans, recipes, grocery lists and progress. It's a Progressive Web App — works on iOS, Android, no install required.",
+      "Yes. Your clients download the Nutriq app from the App Store (iOS) or Google Play (Android) and see plans, recipes, grocery lists and progress. Also available in the browser for desktop use.",
     "faq.q5": "Can I cancel anytime?",
     "faq.a5":
       "Of course. All plans cancel from your dashboard, no fee. You keep access until the end of your paid period.",
